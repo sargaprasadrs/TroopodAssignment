@@ -130,17 +130,31 @@ Definitions live in [`data/`](data/README.md) (seed CSV, metaobject JSON, badge 
 - **Google Chrome** — pixel captures (harness drives the installed browser)
 - **Shopify Partner account + development store** on stock Dawn (set to INR so ₹ renders) and the **Shopify CLI**
 
-### 1. Get the theme on a store
+### 1. Deploy the theme to a store
+
+This repo holds only the **custom parts** of a theme (sections, snippets, assets, homepage template). A Shopify theme also needs Dawn's stock files (`layout/`, `config/`, `locales/`, …) before it can be uploaded — so the deploy script assembles **stock Dawn + our files** into a complete theme, pushes it, and publishes it as live:
 
 ```bash
-# from the repo root — push the theme (sections, snippets, assets, templates) to your dev store
 shopify login --store your-store.myshopify.com
-shopify theme push
-# or preview locally first:
-shopify theme dev        # opens http://localhost:9292
+STORE=your-store scripts/deploy-theme.sh        # assemble → push → publish
 ```
 
-`templates/index.json` already wires the five Purelane sections onto the homepage; add/remove/reorder them from the theme editor like any Dawn section.
+Or run the same steps manually:
+
+```bash
+shopify theme init dawn-base                     # 1. stock Dawn base
+cp sections/purelane-*.liquid   dawn-base/sections/
+cp snippets/purelane-*.liquid   dawn-base/snippets/
+cp assets/purelane.css assets/purelane.js        dawn-base/assets/
+cp templates/index.json                          dawn-base/templates/
+cd dawn-base
+shopify theme push --unpublished --theme "Purelane Dawn" --store your-store
+shopify theme publish -t <theme-id> --store your-store -f
+```
+
+> Status: deployed + published on the assignment store (`purelane-dev-rzcwvlkv`, theme **Purelane Dawn**, Aug 2026).
+
+`templates/index.json` wires the five Purelane sections onto the homepage in order; add/remove/reorder them from the theme editor like any Dawn section. To preview against real store data before pushing: `shopify theme dev` (it serves the local theme on `localhost:9292`; the storefront is password-gated, so the CLI will ask for the storefront password).
 
 ### 2. Seed the store (data)
 
@@ -220,6 +234,8 @@ mindmap
 
 ## 🚀 Next steps
 
-1. Dev-store credentials → finish `notes/submission-email.md` and send to `nj@troopod.io`
-2. Run the live checks once the store is up: theme-editor stress test (plan.md Part 4b) + Lighthouse re-run (`notes/performance-baseline.md`)
-3. Apply the three queued a11y fixes from `notes/qa-report.md` (micro-label contrast, nav-dot target size, `#reviews` heading)
+1. **Verify the live render** — confirm all five sections render on `purelane-dev-rzcwvlkv` (needs the storefront password for the password page / `theme dev`)
+2. **Seed the store** — `data/seed-products.csv` + metaobjects + badge metafield (steps in [`data/README.md`](data/README.md))
+3. Finish `notes/submission-email.md` with the dev-store URL + password and send to `nj@troopod.io`
+4. Re-run the live QA: theme-editor stress test (plan.md Part 4b) + Lighthouse on the deployed theme
+5. Apply the three queued a11y fixes from `notes/qa-report.md` (micro-label contrast, nav-dot target size, `#reviews` heading)
