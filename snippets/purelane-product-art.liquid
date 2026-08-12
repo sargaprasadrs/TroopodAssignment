@@ -23,14 +23,15 @@
   if art_key == blank
     assign art_key = 'bottle'
   endif
-
-  if product != blank and product.featured_image != blank
+-%}
+{%- if product != blank and product.featured_image != blank -%}
+  {%- liquid
     if art_lazy
       assign art_loading = 'lazy'
     else
       assign art_loading = 'eager'
     endif
--%}
+  -%}
   <img
     class="pl-art pl-art--img {{ art_class }}"
     src="{{ product.featured_image | image_url: width: 640 }}"

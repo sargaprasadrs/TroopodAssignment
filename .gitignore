@@ -28,3 +28,7 @@ scripts/px-check/target/
 # Dev-only credentials — never commit store passwords
 *.env
 .env.local
+
+# python
+__pycache__/
+*.pyc
