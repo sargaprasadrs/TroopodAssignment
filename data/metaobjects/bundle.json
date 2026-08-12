@@ -1,0 +1,46 @@
+{
+  "type": "bundle",
+  "name": "Bundle",
+  "description": "Tier card shown in the #bundles section (Starter 2 / Most popular 3 / Whole home 5). Prices and savings come live from the referenced products.",
+  "access": {
+    "admin": "MERCHANT_READ_WRITE",
+    "storefront": "READ"
+  },
+  "field_definitions": [
+    {
+      "name": "Name",
+      "key": "name",
+      "type": "single_line_text_field",
+      "required": true,
+      "description": "Tier title, e.g. \"Starter\"."
+    },
+    {
+      "name": "Tag / badge",
+      "key": "tag",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Flag above the title, e.g. \"Starter 2\", \"Most popular 3\", \"Whole home 5\". Empty hides it."
+    },
+    {
+      "name": "Products",
+      "key": "products",
+      "type": "list.product_reference",
+      "required": true,
+      "description": "Products in the tier, in display order. Quantity shown on the card is computed from this list."
+    },
+    {
+      "name": "Bullets",
+      "key": "bullets",
+      "type": "rich_text",
+      "required": false,
+      "description": "Per-product / benefit bullet list rendered on the card."
+    },
+    {
+      "name": "CTA label",
+      "key": "cta_label",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Button label, e.g. \"Buy this bundle\". Falls back to a sensible default when empty."
+    }
+  ]
+}

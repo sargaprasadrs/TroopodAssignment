@@ -1,0 +1,67 @@
+{
+  "type": "combo",
+  "name": "Combo",
+  "description": "Product group card shown in the #combos rail. Marketing creates and edits combos in Admin without touching code. Savings are computed from product compare-at prices in Liquid - never stored here.",
+  "access": {
+    "admin": "MERCHANT_READ_WRITE",
+    "storefront": "READ"
+  },
+  "field_definitions": [
+    {
+      "name": "Name",
+      "key": "name",
+      "type": "single_line_text_field",
+      "required": true,
+      "description": "Card title, e.g. \"Everyday Essentials Combo\"."
+    },
+    {
+      "name": "Description",
+      "key": "description",
+      "type": "multi_line_text_field",
+      "required": false,
+      "description": "Optional short description under the title."
+    },
+    {
+      "name": "Products",
+      "key": "products",
+      "type": "list.product_reference",
+      "required": true,
+      "description": "Products in the combo, in display order. Prices and savings are read live from each product."
+    },
+    {
+      "name": "Badge text",
+      "key": "badge_text",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Optional small flag on the card, e.g. \"Most popular\". Empty hides it."
+    },
+    {
+      "name": "Includes line",
+      "key": "includes_line",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Label before the product count, e.g. \"Includes\"."
+    },
+    {
+      "name": "Fine print",
+      "key": "fine_print",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Small print under the price row, e.g. \"Free shipping over Rs. 999\"."
+    },
+    {
+      "name": "CTA label",
+      "key": "cta_label",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Button label, e.g. \"Add combo to cart\". Falls back to a sensible default when empty."
+    },
+    {
+      "name": "Is most popular",
+      "key": "is_most_popular",
+      "type": "boolean",
+      "required": false,
+      "description": "Highlights the card as the default/featured combo."
+    }
+  ]
+}

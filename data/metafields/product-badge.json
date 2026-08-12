@@ -1,0 +1,12 @@
+{
+  "namespace": "custom",
+  "key": "badge",
+  "owner_type": "product",
+  "name": "Badge",
+  "type": "single_line_text_field",
+  "description": "Optional per-product override for the pill badge shown on shop cards (e.g. \"Limited edition\"). When empty, the card falls back to tag-driven badges: bestseller / toprated / new.",
+  "access": {
+    "admin": "MERCHANT_READ_WRITE",
+    "storefront": "READ"
+  }
+}

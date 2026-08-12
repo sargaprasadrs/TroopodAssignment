@@ -1,0 +1,23 @@
+# Shopify CLI local files
+.shopify/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Local assets / tooling output
+*.log
+dist/
+.tmp/
+
+# Dev-only credentials — never commit store passwords
+*.env
+.env.local

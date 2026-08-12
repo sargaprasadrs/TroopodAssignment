@@ -1,0 +1,57 @@
+{
+  "type": "review",
+  "name": "Review",
+  "description": "Single customer review card in the #reviews marquee rail. The rail's aggregate numbers (4.8 / 8,000+ / 12 lakh+) are section settings, not metaobjects - they have no native platform source.",
+  "access": {
+    "admin": "MERCHANT_READ_WRITE",
+    "storefront": "READ"
+  },
+  "field_definitions": [
+    {
+      "name": "Author name",
+      "key": "author",
+      "type": "single_line_text_field",
+      "required": true,
+      "description": "Display name, e.g. \"Priya S.\"."
+    },
+    {
+      "name": "Product",
+      "key": "product",
+      "type": "product_reference",
+      "required": false,
+      "description": "Product the review refers to; shown on the card. Optional."
+    },
+    {
+      "name": "Rating",
+      "key": "rating",
+      "type": "number_decimal",
+      "required": true,
+      "description": "Star rating for this review.",
+      "validations": [
+        { "name": "min", "value": "0" },
+        { "name": "max", "value": "5" }
+      ]
+    },
+    {
+      "name": "Headline",
+      "key": "headline",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Short headline, e.g. \"Sparkling taps, no elbow grease\"."
+    },
+    {
+      "name": "Quote",
+      "key": "quote",
+      "type": "multi_line_text_field",
+      "required": true,
+      "description": "The review body."
+    },
+    {
+      "name": "Verified",
+      "key": "verified",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows the verified-purchase check on the card."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# Files Shopify CLI should not push to the store (local-only)
+.shopify/
+node_modules/
+*.log
+notes/
+scripts/px-check/screenshots/
