@@ -16,23 +16,21 @@ flowchart LR
     D --> E["Part 5 · Delivery"]
 
     A:::done
-    B:::wip
-    C:::wip
-    D:::wip
-    E:::todo
+    B:::done
+    C:::done
+    D:::done
+    E:::done
 
     classDef done fill:#15803d,stroke:#052e16,color:#fff
-    classDef wip fill:#b45309,stroke:#431407,color:#fff
-    classDef todo fill:#e2e8f0,stroke:#94a3b8,color:#334155
 ```
 
 | Part | Scope | Status |
 |---|---|---|
-| **1 · Recon & Spec** | Design audit, fix-list, five pixel-accurate section specs | ✅ **Committed** |
-| **2 · Setup & Data** | Locked decisions, seed data, metaobject definitions | 🟡 Setup committed — **blocked on dev store credentials** |
-| **3 · Build** | Five sections + shared snippets on stock Dawn | 🟡 In progress — sections + snippets landed; assets/template pending |
-| **4 · QA & Hardening** | Pixel checks, theme-editor stress test, a11y, CWV | 🟡 In progress — harness + prototype baseline done; store/Part 3 checks pending |
-| **5 · Delivery** | Notes, submission to `nj@troopod.io` | 🟡 Notes committed + pushed to GitHub; email waits on dev-store creds |
+| **1 · Recon & Spec** | Design audit, fix-list, five pixel-accurate section specs | ✅ Committed |
+| **2 · Setup & Data** | Locked decisions, seed data, metaobject definitions | ✅ Committed — store activation needs dev-store credentials |
+| **3 · Build** | Five sections + shared snippets + assets + homepage template | ✅ Committed |
+| **4 · QA & Hardening** | Pixel harness, axe, contrast, perf reference | ✅ Committed — live store checks (4b/4d) pending dev store |
+| **5 · Delivery** | Build/AI-workflow notes, submission draft | ✅ Committed + pushed to GitHub — email waits on dev-store creds |
 
 ---
 
@@ -124,6 +122,70 @@ Definitions live in [`data/`](data/README.md) (seed CSV, metaobject JSON, badge 
 
 ---
 
+## 🚀 How to run
+
+### Prerequisites
+
+- **Node.js 18+** and **Python 3.11+** — QA harness
+- **Google Chrome** — pixel captures (harness drives the installed browser)
+- **Shopify Partner account + development store** on stock Dawn (set to INR so ₹ renders) and the **Shopify CLI**
+
+### 1. Get the theme on a store
+
+```bash
+# from the repo root — push the theme (sections, snippets, assets, templates) to your dev store
+shopify login --store your-store.myshopify.com
+shopify theme push
+# or preview locally first:
+shopify theme dev        # opens http://localhost:9292
+```
+
+`templates/index.json` already wires the five Purelane sections onto the homepage; add/remove/reorder them from the theme editor like any Dawn section.
+
+### 2. Seed the store (data)
+
+Follow [`data/README.md`](data/README.md) in order:
+
+1. **Products** — Admin → Products → Import → `data/seed-products.csv` (10 products incl. sold-out, no-image and long-title edge cases)
+2. **Collection** "Shop" (tag `bestseller`) — picked in the shop section settings
+3. **Metaobject definitions** — Admin → Settings → Custom data → create from `data/metaobjects/*.json` (`combo`, `combo_item`, `bundle`, `review`), then add entries
+4. **Badge metafield** — Admin → Settings → Custom data → Metafields → from `data/metafields/product-badge.json`
+
+### 3. Run the QA harness
+
+```bash
+cd scripts/px-check
+npm install
+
+node capture.js                                  # prototype baseline @ 375/768/1024/1440
+PX_URL=http://localhost:9292 node capture.js     # capture the live build instead
+node axe.js                                      # WCAG 2a–22aa accessibility scan
+python contrast.py                               # WCAG AA contrast matrix (V2 palette)
+```
+
+Performance reference (prototype) — or point Lighthouse at `localhost:9292` for the live build:
+
+```bash
+python -m http.server 8123 --bind 127.0.0.1 --directory ../..
+npx -y lighthouse http://127.0.0.1:8123/purelane-homepage.html \
+  --only-categories=performance,accessibility \
+  --output=json --output-path=out/lh.json \
+  --chrome-path="C:/Program Files/Google/Chrome/Application/chrome.exe"
+```
+
+Details for every command: [`scripts/px-check/README.md`](scripts/px-check/README.md).
+
+### 4. Where the docs live
+
+| Need | Read |
+|---|---|
+| Why we built it this way | [`plan.md`](plan.md) — 5-part plan, decisions, cut strategy |
+| Pixel spec of every section | [`specs/`](specs/) |
+| QA evidence | [`notes/qa-report.md`](notes/qa-report.md) + `scripts/px-check/out/` |
+| What we'd flag / do differently | [`notes/build-notes.md`](notes/build-notes.md), [`notes/ai-workflow-notes.md`](notes/ai-workflow-notes.md) |
+
+---
+
 ## 🗂️ Repository map
 
 ```mermaid
@@ -135,25 +197,29 @@ mindmap
     purelane-homepage.html
       Design source of truth
     specs
-      00-tokens.md
-      hero.md
-      shop.md
-      combos.md
-      bundles.md
-      reviews.md
+      Shared tokens + one spec per section
+    sections
+      purelane-hero / shop / combos / bundles / reviews
+    snippets
+      Shared cards, panel head, icons, product art, assets
+    assets
+      purelane.css + purelane.js
+    templates
+      index.json homepage wiring
     data
       seed-products.csv
-      metaobjects
-      metafields
+      metaobjects (combo, combo_item, bundle, review)
+      metafields (product badge)
     notes
-      decisions.md
-      performance-baseline.md
+      Decisions, QA report, build + AI-workflow notes, email draft
+    scripts/px-check
+      capture.js + axe.js + contrast.py QA harness
 ```
 
 ---
 
 ## 🚀 Next steps
 
-1. **Dev store** — Shopify Partner account + development store (INR), stock Dawn
-2. **Part 3 build** — shared snippets → shop → hero → combos → bundles → reviews
-3. **Part 4 QA** — pixel screenshots, theme-editor stress test, Lighthouse vs baseline
+1. Dev-store credentials → finish `notes/submission-email.md` and send to `nj@troopod.io`
+2. Run the live checks once the store is up: theme-editor stress test (plan.md Part 4b) + Lighthouse re-run (`notes/performance-baseline.md`)
+3. Apply the three queued a11y fixes from `notes/qa-report.md` (micro-label contrast, nav-dot target size, `#reviews` heading)
