@@ -16,7 +16,11 @@ Captures the design source and the build at 375 / 768 / 1024 / 1440, full-page +
 ```bash
 node capture.js                                  # prototype (default: file://purelane-homepage.html)
 PX_URL=http://localhost:9292 node capture.js     # dev store / theme dev preview
+# env knobs (useful for the dev server, which keeps a live-reload socket open):
+PX_WAIT=load PX_SETTLE=1500 PX_URL=http://localhost:9292 node capture.js
 ```
+
+> `PX_WAIT` overrides the page-load condition (`networkidle0` default). The Shopify dev server keeps a websocket open for hot reload, so `networkidle0` never fires — use `PX_WAIT=load PX_SETTLE=1500` against it. `PX_SETTLE` is the post-load settle delay in ms.
 
 - Output: `prototype/` (or `target/` when `PX_URL` is set) — `<width>.png` + `sec-<width>-<section>.png` (hero, shop, combos, bundles, reviews)
 - Report: `out/capture-report.json` (per-width page heights; any section reported `MISSING`)
@@ -51,3 +55,12 @@ npx -y lighthouse http://127.0.0.1:8123/purelane-homepage.html \
 ```
 
 The stock-Dawn baseline / final-build re-run uses the identical command in `notes/performance-baseline.md` against `localhost:9292`.
+
+## 5. Live-build interactive pass (`4c`)
+
+```bash
+node live-check.js            # requires theme dev running at localhost:9292
+```
+
+- Verifies all five sections render, checks focus rings on tab stops, emulates `prefers-reduced-motion` and counts active animations, and collects console errors + failed requests.
+- Output: `out/live-check.json` + `out/live-homepage.png` (full-page screenshot).

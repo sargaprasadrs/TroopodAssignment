@@ -1,0 +1,59 @@
+{
+  "consoleErrors": [
+    "Access to script at 'http://cdn.shopify.com/shopifycloud/storefront/assets/storefront/origin_trials-5059b83f.js' from origin 'http://localhost:9292' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: the server responded with a status of 400 ()",
+    "[shopify-account] Menu \"customer-account-main-menu\" not found in Storefront API. Falling back to default menu items.",
+    "Framing 'https://shop.app/' violates the following Content Security Policy directive: \"frame-ancestors 'self' https://shop.app https://admin.shopify.com\". The request has been blocked.\n",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 400 ()",
+    "[shopify-account] Menu \"customer-account-main-menu\" not found in Storefront API. Falling back to default menu items."
+  ],
+  "failedReqs": [
+    "http://cdn.shopify.com/shopifycloud/storefront/assets/storefront/origin_trials-5059b83f.js",
+    "http://localhost:9292/web-pixels@f0278712w4dc1d85epb91e7f02mc957d251/custom/web-pixel-shopify-custom-pixel@0510/sandbox/modern/",
+    "http://localhost:9292/api/collect",
+    "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&analytics_trace_id=ea244822-1673-4492-8732-b5ee00922baf&compact_layout=true&flow=embed&flow_version=account_menu&locale=en&preact=true&redirect_uri=http%3A%2F%2Flocalhost%3A9292&response_mode=web_message&response_type=id_token&scope=openid+email%3Averified+pay%3Asession_token+profile+shop%3Aaccount_uuid&storefront_domain=https%3A%2F%2Fpurelane-dev-rzcwvlkv.myshopify.com&target_origin=http%3A%2F%2Flocalhost%3A9292&ux_mode=windoid&ux_role=prompt",
+    "https://shop.app/pay/hop?analytics_trace_id=3ce293c9-b1ad-4ba2-b48b-c6a4583b5c9a&target_origin=http%3A%2F%2Flocalhost%3A9292&client_handle=purelane-dev-rzcwvlkv.myshopify.com"
+  ],
+  "sections": {
+    "hero": {
+      "h": 900
+    },
+    "shop": {
+      "h": 261,
+      "cards": 0,
+      "firstCardText": null
+    },
+    "combos": {
+      "h": 366,
+      "cards": 0,
+      "firstCardText": null
+    },
+    "bundles": {
+      "h": 422
+    },
+    "reviews": {
+      "h": 170
+    },
+    "bodyText": "purelane-dev CLEAN THAT LASTS Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it. SHOP NOW HOW IT WORKS PLANT POWERED KIDS & PET SAFE ZERO HARSH CHEM PLANT POWERED From plants, not chemicals SAFE FOR KIDS & PETS Gentle around the whole family ZERO HARSH CHEMICALS Kind to skin, surfaces and soil BESTSELLERS LOVED BY 30,000 HOMES "
+  },
+  "firstFocus": {
+    "tag": "A",
+    "txt": "purelane-dev",
+    "outline": "auto 1px",
+    "hasRing": true
+  },
+  "thirdFocus": {
+    "tag": "A",
+    "txt": "",
+    "outline": "auto 1px",
+    "hasRing": true
+  },
+  "reducedMotion": {
+    "animations": 0,
+    "revealHidden": 0,
+    "revealCount": 1
+  },
+  "pageHeight": 2249
+}

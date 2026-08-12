@@ -5,7 +5,9 @@ const path = require('path');
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const URL = process.env.PX_URL || 'file:///C:/Users/LOQ/Desktop/TroopodAssignment/purelane-homepage.html';
 const WIDTHS = [375, 768, 1024, 1440];
-const SECTIONS = [['hero','section.hero'],['shop','#shop'],['combos','#combos'],['bundles','#bundles'],['reviews','#reviews']];
+// Selectors match both the design prototype (section.hero) and the
+// Dawn build (section.pl-hero). Other sections keep their ids in both.
+const SECTIONS = [['hero','section.hero, section.pl-hero'],['shop','#shop'],['combos','#combos'],['bundles','#bundles'],['reviews','#reviews']];
 const OUT = path.join(__dirname, 'prototype');
 const report = {};
 
@@ -15,7 +17,8 @@ const report = {};
     const page = await browser.newPage();
     await page.setViewport({ width: w, height: 900, deviceScaleFactor: 1 });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 60000 });
+    await page.goto(URL, { waitUntil: (process.env.PX_WAIT || 'networkidle0'), timeout: 60000 });
+    await new Promise(r => setTimeout(r, +(process.env.PX_SETTLE || 0)));
     await new Promise(r => setTimeout(r, 900));
     const h = await page.evaluate(() => document.documentElement.scrollHeight);
     await page.screenshot({ path: path.join(OUT, w + '.png'), fullPage: true });

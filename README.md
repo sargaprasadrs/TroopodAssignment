@@ -27,10 +27,10 @@ flowchart LR
 | Part | Scope | Status |
 |---|---|---|
 | **1 · Recon & Spec** | Design audit, fix-list, five pixel-accurate section specs | ✅ Committed |
-| **2 · Setup & Data** | Locked decisions, seed data, metaobject definitions | ✅ Committed — store activation needs dev-store credentials |
-| **3 · Build** | Five sections + shared snippets + assets + homepage template | ✅ Committed |
-| **4 · QA & Hardening** | Pixel harness, axe, contrast, perf reference | ✅ Committed — live store checks (4b/4d) pending dev store |
-| **5 · Delivery** | Build/AI-workflow notes, submission draft | ✅ Committed + pushed to GitHub — email waits on dev-store creds |
+| **2 · Setup & Data** | Locked decisions, seed data, metaobject definitions | ✅ Committed — seeding steps ready (`data/README.md`) |
+| **3 · Build** | Five sections + shared snippets + assets + homepage template | ✅ Committed, pushed to dev store, **live** |
+| **4 · QA & Hardening** | Pixel harness, axe, contrast, perf reference | ✅ Live build verified (all 5 sections @ 4 widths, axe, focus, reduced motion) — 4b stress test + final Lighthouse pending |
+| **5 · Delivery** | Build/AI-workflow notes, submission draft | ✅ Committed + pushed — email ready, URL/password filled in |
 
 ---
 

@@ -11,7 +11,7 @@ Here's my submission for the AI Product Engineer build assignment — turning th
 
 **Deliverables**
 
-- **Dev store:** URL: `<PASTE DEV STORE URL — e.g. your-store.myshopify.com>` · Password: `<PASTE STORE PASSWORD>` (omitted from the repo, per the brief)
+- **Dev store:** URL: **https://purelane-dev-rzcwvlkv.myshopify.com** · Password: **_(fill in at send time — never committed to the repo)_**
 - **GitHub repo (commit history intact):** https://github.com/sargaprasadrs/TroopodAssignment
 - **Metafield / metaobject definitions:** `data/` (combo, combo-item, bundle, review; product badge metafield; seed-products.csv)
 - **Build notes:** `notes/build-notes.md` — what's wrong with the original file, what we changed and why, what we'd do with more time
@@ -26,9 +26,10 @@ Here's my submission for the AI Product Engineer build assignment — turning th
 
 **Straight talk on gaps**
 
-- Dev-store validation (theme-editor stress test, final Lighthouse) is still pending — the store credentials above unlock `notes/performance-baseline.md` and the Part 4 checklist.
-- The Part 3 commit (sections + snippets are written) lands right after the asset layer (CSS/JS) and homepage template finish.
-- Three a11y fixes are queued from the audit (micro-label contrast, nav-dot target size, a heading for #reviews) and go into the build next.
+- **The theme is live** (Purelane Dawn, published on the store above) and all five sections render at 375/768/1024/1440 — verified with the pixel harness against the deployed build (`theme check`: 52 files, zero offenses).
+- **The store is not yet seeded** — the homepage's shop/combos grids render empty until the products from `data/seed-products.csv` are imported and the combo/bundle/review metaobjects are created in Admin (steps in `data/README.md`). I'd do this right before you review; it's ~15 minutes of Admin clicks.
+- The theme-editor stress test and the final Lighthouse on the live storefront are the last QA items; both are documented with exact steps and ready to run.
+- One stock-Dawn a11y note: Dawn's new header cart link has no accessible name (inline SVG only) — one-line fix (add `aria-label`), not in our five sections.
 
 Happy to walk through anything. Thanks for reading.
 

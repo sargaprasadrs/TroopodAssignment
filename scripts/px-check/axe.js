@@ -10,7 +10,8 @@ const URL = process.env.PX_URL || 'file:///C:/Users/LOQ/Desktop/TroopodAssignmen
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-first-run'] });
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 900 });
-  await page.goto(URL, { waitUntil: 'networkidle0', timeout: 60000 });
+  await page.goto(URL, { waitUntil: (process.env.PX_WAIT || 'networkidle0'), timeout: 60000 });
+  await new Promise(r => setTimeout(r, +(process.env.PX_SETTLE || 0)));
   await page.addScriptTag({ content: axeSource });
   const results = await page.evaluate(async () => {
     return await axe.run(document, {
