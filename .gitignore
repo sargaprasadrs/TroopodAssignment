@@ -18,6 +18,13 @@ package-lock.json
 dist/
 .tmp/
 
+# Part 4 pixel-capture artifacts (26 MB — regenerate with scripts/px-check)
+scripts/px-check/prototype/
+scripts/px-check/target/
+
+# Keep the pixel-harness lockfile for reproducible installs
+!scripts/px-check/package-lock.json
+
 # Dev-only credentials — never commit store passwords
 *.env
 .env.local
