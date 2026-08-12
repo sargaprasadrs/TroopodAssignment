@@ -1,0 +1,25 @@
+{
+  "type": "combo_item",
+  "name": "Combo item",
+  "description": "One product slot inside a combo's tray stack. Marketing edits captions in Admin; art comes live from the referenced product's image or the product-art fallback.",
+  "access": {
+    "admin": "MERCHANT_READ_WRITE",
+    "storefront": "READ"
+  },
+  "field_definitions": [
+    {
+      "name": "Product",
+      "key": "product",
+      "type": "product_reference",
+      "required": true,
+      "description": "The product shown in this tray slot. Price and image are read live from it."
+    },
+    {
+      "name": "Caption",
+      "key": "caption",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "2-line caption under the art, e.g. \"Cuts grease instantly\"."
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{% render 'purelane-assets' %}
+
+<section
+  id="hero"
+  class="pl-sec pl-hero"
+  data-hero
+  data-autoplay="{{ section.settings.show_autoplay }}"
+  data-interval="{{ section.settings.autoplay_interval }}"
+  data-scroll-fade="{{ section.settings.enable_scroll_fade }}"
+  style="--pl-bg-tint: {{ section.settings.background_tint }}; --pl-pt: {{ section.settings.padding_top }}px; --pl-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="pl-wrap pl-hero-grid">
+    <div class="pl-hero-copy">
+      <h1 class="pl-d1 pl-rv">
+        {%- liquid
+          assign hero_heading = section.settings.heading | default: blank
+          assign hero_accent = section.settings.heading_accent | default: blank
+          assign has_accent = false
+          if hero_accent != blank and hero_heading != blank and hero_heading contains hero_accent
+            assign has_accent = true
+          endif
+        -%}
+        {%- if has_accent -%}
+          {%- assign hero_pre = hero_heading | split: hero_accent | first -%}
+          {%- assign hero_post = hero_heading | remove_first: hero_pre | remove_first: hero_accent -%}
+          {{ hero_pre | strip }}<br><span class="pl-lime">{{ hero_accent }}</span>{{ hero_post }}
+        {%- else -%}
+          {{ hero_heading }}
+        {%- endif -%}
+      </h1>
+
+      <div class="pl-rule pl-rule--left pl-rv pl-rv-1" aria-hidden="true">
+        <span class="pl-rule__line"></span>
+        <svg class="pl-rule__leaf" viewBox="0 0 16 16" width="16" height="16"><path d="M13.8 2.2C8.2 1.6 3.4 4.9 2.6 8.5c-.5 2.3.6 4.6 2.7 5.3 1.6.5 3.2-.1 4.2-1.5 1.8.2 3.6-.8 4.3-2.5v-7.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.4 12.6c3-3 5.4-4.7 8.6-6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <span class="pl-rule__line"></span>
+      </div>
+
+      <p class="pl-lede pl-rv pl-rv-2">{{ section.settings.lede }}</p>
+
+      <div class="pl-hero-cta pl-rv pl-rv-3">
+        <a class="pl-btn pl-btn--primary" href="{{ section.settings.primary_cta_link }}">
+          <span>{{ section.settings.primary_cta_label }}</span>
+          {% render 'purelane-icon', icon: 'arrow', size: 15 %}
+        </a>
+        <a class="pl-btn pl-btn--ghost" href="{{ section.settings.secondary_cta_link }}">{{ section.settings.secondary_cta_label }}</a>
+      </div>
+
+      {%- if section.settings.show_badge_strip -%}
+        <div class="pl-badgestrip pl-rv pl-rv-4">
+          <div class="pl-glass-2 pl-btile">
+            {% render 'purelane-icon', icon: section.settings.strip1_icon, size: 18, class: 'pl-btile__ic' %}
+            <span>{{ section.settings.strip1_label }}</span>
+          </div>
+          <div class="pl-glass-2 pl-btile">
+            {% render 'purelane-icon', icon: section.settings.strip2_icon, size: 18, class: 'pl-btile__ic' %}
+            <span>{{ section.settings.strip2_label }}</span>
+          </div>
+          <div class="pl-glass-2 pl-btile">
+            {% render 'purelane-icon', icon: section.settings.strip3_icon, size: 18, class: 'pl-btile__ic' %}
+            <span>{{ section.settings.strip3_label }}</span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pl-hero-prod">
+      <div class="pl-hstage">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'slide' -%}
+            {%- liquid
+              assign slide_num = forloop.index
+              assign slide_label = block.settings.label | default: blank
+              assign slide_offer = block.settings.offer_line | default: blank
+              assign slide_img = block.settings.image | default: nil
+              assign slide_prod = block.settings.product | default: nil
+              assign slide_price = block.settings.price | default: blank
+              assign slide_compare = block.settings.compare_at_price | default: blank
+              if slide_price == blank and slide_prod != blank
+                assign slide_price = slide_prod.price
+              endif
+              if slide_compare == blank and slide_prod != blank
+                assign slide_compare = slide_prod.compare_at_price
+              endif
+              assign price_num = blank
+              assign compare_num = blank
+              if slide_price != blank
+                assign price_num = slide_price | plus: 0
+              endif
+              if slide_compare != blank
+                assign compare_num = slide_compare | plus: 0
+              endif
+              assign offer_final = slide_offer
+              if offer_final == blank and compare_num != blank and price_num != blank and compare_num > price_num
+                assign saved_num = compare_num | minus: price_num
+                assign pct_num = saved_num | times: 100 | divided_by: compare_num | round
+                assign offer_final = pct_num | append: '% off'
+              endif
+              assign art_eager = 'lazy'
+              if forloop.first
+                assign art_eager = 'eager'
+              endif
+            -%}
+            <div
+              class="pl-hslide pl-hslide--{{ slide_num }}{% if forloop.first %} pl-on{% endif %}"
+              role="img"
+              aria-label="{{ slide_label | escape }}"
+              {% unless forloop.first %}aria-hidden="true"{% endunless %}
+            >
+              <div class="pl-hstack">
+                {%- for art_i in (1..slide_num) -%}
+                  <div class="pl-hart">
+                    {%- if slide_img != blank -%}
+                      <img
+                        class="pl-art pl-art--img pl-hart__img"
+                        src="{{ slide_img | image_url: width: 900 }}"
+                        alt="{{ slide_img.alt | escape }}"
+                        width="{{ slide_img.width }}"
+                        height="{{ slide_img.height }}"
+                        loading="{{ art_eager }}"
+                        decoding="async"
+                      >
+                    {%- else -%}
+                      {%- render 'purelane-product-art', product: slide_prod, class_name: 'pl-hart__art', lazy: art_eager == 'lazy' -%}
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+              <div class="pl-ptag">
+                <div class="pl-ptag__lbl">{{ slide_label }}</div>
+                {%- if price_num != blank -%}
+                  <div class="pl-ptag__val">
+                    <strong>{{ price_num | money_without_trailing_zeros }}</strong>
+                    {%- if compare_num != blank and compare_num > price_num -%}
+                      <s>{{ compare_num | money_without_trailing_zeros }}</s>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if offer_final != blank -%}
+                  <div class="pl-ptag__cut">{{ offer_final }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="pl-hdots" aria-label="Hero slides">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'slide' -%}
+              <button
+                type="button"
+                class="pl-hdot{% if forloop.first %} pl-on{% endif %}"
+                data-slide="{{ forloop.index0 }}"
+                aria-label="Show {{ forloop.index }} product{% if forloop.index > 1 %}s{% endif %}"
+                {% if forloop.first %}aria-current="true"{% endif %}
+              ></button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_trust_badges -%}
+    <div class="pl-badges" aria-label="Trust badges">
+      <div class="pl-badge">
+        <span class="pl-badge__ic">{% render 'purelane-icon', icon: section.settings.badge1_icon, size: 17 %}</span>
+        <span class="pl-badge__tx"><b>{{ section.settings.badge1_label }}</b><i>{{ section.settings.badge1_sub }}</i></span>
+      </div>
+      <div class="pl-badge">
+        <span class="pl-badge__ic">{% render 'purelane-icon', icon: section.settings.badge2_icon, size: 17 %}</span>
+        <span class="pl-badge__tx"><b>{{ section.settings.badge2_label }}</b><i>{{ section.settings.badge2_sub }}</i></span>
+      </div>
+      <div class="pl-badge">
+        <span class="pl-badge__ic">{% render 'purelane-icon', icon: section.settings.badge3_icon, size: 17 %}</span>
+        <span class="pl-badge__tx"><b>{{ section.settings.badge3_label }}</b><i>{{ section.settings.badge3_sub }}</i></span>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="pl-sr-only" aria-live="polite" aria-atomic="true">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'slide' and forloop.first -%}
+        {{ block.settings.label }}
+        {%- if block.settings.price != blank %} — {{ block.settings.price }}{% endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Hero",
+  "tag": "section",
+  "class": "purelane-hero",
+  "settings": [
+    { "type": "header", "content": "Copy" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Clean That Lasts" },
+    { "type": "text", "id": "heading_accent", "label": "Accent word", "default": "Lasts" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_cta_label", "label": "Primary button label", "default": "Shop now" },
+    { "type": "url", "id": "primary_cta_link", "label": "Primary button link", "default": "#shop" },
+    { "type": "text", "id": "secondary_cta_label", "label": "Secondary button label", "default": "How it works" },
+    { "type": "url", "id": "secondary_cta_link", "label": "Secondary button link", "default": "#how" },
+    { "type": "header", "content": "Trust badges (desktop rail)" },
+    { "type": "checkbox", "id": "show_trust_badges", "label": "Show trust badges", "default": true },
+    { "type": "text", "id": "badge1_label", "label": "Badge 1 label", "default": "Plant powered" },
+    { "type": "text", "id": "badge1_sub", "label": "Badge 1 sub-label", "default": "From plants, not chemicals" },
+    { "type": "select", "id": "badge1_icon", "label": "Badge 1 icon", "default": "leaf", "options": [
+      { "value": "leaf", "label": "Leaf" }, { "value": "shield", "label": "Shield" }, { "value": "drop", "label": "Drop" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "heart", "label": "Heart" }
+    ] },
+    { "type": "text", "id": "badge2_label", "label": "Badge 2 label", "default": "Safe for kids & pets" },
+    { "type": "text", "id": "badge2_sub", "label": "Badge 2 sub-label", "default": "Gentle around the whole family" },
+    { "type": "select", "id": "badge2_icon", "label": "Badge 2 icon", "default": "shield", "options": [
+      { "value": "leaf", "label": "Leaf" }, { "value": "shield", "label": "Shield" }, { "value": "drop", "label": "Drop" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "heart", "label": "Heart" }
+    ] },
+    { "type": "text", "id": "badge3_label", "label": "Badge 3 label", "default": "Zero harsh chemicals" },
+    { "type": "text", "id": "badge3_sub", "label": "Badge 3 sub-label", "default": "Kind to skin, surfaces and soil" },
+    { "type": "select", "id": "badge3_icon", "label": "Badge 3 icon", "default": "drop", "options": [
+      { "value": "leaf", "label": "Leaf" }, { "value": "shield", "label": "Shield" }, { "value": "drop", "label": "Drop" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "heart", "label": "Heart" }
+    ] },
+    { "type": "header", "content": "Badge strip (mobile)" },
+    { "type": "checkbox", "id": "show_badge_strip", "label": "Show badge strip", "default": true },
+    { "type": "text", "id": "strip1_label", "label": "Strip tile 1", "default": "Plant powered" },
+    { "type": "select", "id": "strip1_icon", "label": "Strip tile 1 icon", "default": "leaf", "options": [
+      { "value": "leaf", "label": "Leaf" }, { "value": "shield", "label": "Shield" }, { "value": "drop", "label": "Drop" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "heart", "label": "Heart" }
+    ] },
+    { "type": "text", "id": "strip2_label", "label": "Strip tile 2", "default": "Kids & pet safe" },
+    { "type": "select", "id": "strip2_icon", "label": "Strip tile 2 icon", "default": "shield", "options": [
+      { "value": "leaf", "label": "Leaf" }, { "value": "shield", "label": "Shield" }, { "value": "drop", "label": "Drop" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "heart", "label": "Heart" }
+    ] },
+    { "type": "text", "id": "strip3_label", "label": "Strip tile 3", "default": "Zero harsh chem" },
+    { "type": "select", "id": "strip3_icon", "label": "Strip tile 3 icon", "default": "drop", "options": [
+      { "value": "leaf", "label": "Leaf" }, { "value": "shield", "label": "Shield" }, { "value": "drop", "label": "Drop" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "heart", "label": "Heart" }
+    ] },
+    { "type": "header", "content": "Animation" },
+    { "type": "checkbox", "id": "show_autoplay", "label": "Auto-advance slides", "default": true },
+    { "type": "range", "id": "autoplay_interval", "label": "Interval", "min": 2000, "max": 8000, "step": 200, "unit": "ms", "default": 3800 },
+    { "type": "checkbox", "id": "enable_scroll_fade", "label": "Fade the stage on scroll", "default": true },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "background_tint", "label": "Background tint", "default": "#00000000" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 34 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Single bottle" },
+        { "type": "text", "id": "offer_line", "label": "Offer line (empty = computed % off)", "default": "33% off" },
+        { "type": "image_picker", "id": "image", "label": "Slide image" },
+        { "type": "product", "id": "product", "label": "Product (image + price fallback)" },
+        { "type": "text", "id": "price", "label": "Price (empty = product price)", "default": "200" },
+        { "type": "text", "id": "compare_at_price", "label": "Compare-at price (empty = product)", "default": "299" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Hero",
+      "blocks": [
+        { "type": "slide", "settings": { "label": "Single bottle", "offer_line": "33% off", "price": "200", "compare_at_price": "299" } },
+        { "type": "slide", "settings": { "label": "Any 2 products", "offer_line": "Save ₹249", "price": "349", "compare_at_price": "598" } },
+        { "type": "slide", "settings": { "label": "Any 3 products", "offer_line": "Save ₹398", "price": "499", "compare_at_price": "897" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

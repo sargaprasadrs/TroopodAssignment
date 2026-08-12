@@ -12,23 +12,23 @@
       "key": "author",
       "type": "single_line_text_field",
       "required": true,
-      "description": "Display name, e.g. \"Priya S.\"."
+      "description": "Display name, e.g. \"Anita\"."
     },
     {
-      "name": "Product",
-      "key": "product",
-      "type": "product_reference",
+      "name": "Product label",
+      "key": "product_label",
+      "type": "single_line_text_field",
       "required": false,
-      "description": "Product the review refers to; shown on the card. Optional."
+      "description": "Product line on the card, e.g. \"Laundry detergent\". A free-text label so marketing can write anything."
     },
     {
       "name": "Rating",
       "key": "rating",
       "type": "number_decimal",
       "required": true,
-      "description": "Star rating for this review.",
+      "description": "Star rating rendered as filled stars (1-5).",
       "validations": [
-        { "name": "min", "value": "0" },
+        { "name": "min", "value": "1" },
         { "name": "max", "value": "5" }
       ]
     },
@@ -37,7 +37,7 @@
       "key": "headline",
       "type": "single_line_text_field",
       "required": false,
-      "description": "Short headline, e.g. \"Sparkling taps, no elbow grease\"."
+      "description": "Short headline, e.g. \"Works like a charm\"."
     },
     {
       "name": "Quote",

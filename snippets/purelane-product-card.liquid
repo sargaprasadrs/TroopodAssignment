@@ -1,0 +1,87 @@
+{%- liquid
+  assign p = card_product
+  assign s = card_settings
+
+  assign badge_text = blank
+  assign badge_override = p.metafields.custom.badge.value | default: blank
+  if badge_override != blank
+    assign badge_text = badge_override
+  elsif p.tags contains 'bestseller' and s.bestseller_tag_label != blank
+    assign badge_text = s.bestseller_tag_label
+  elsif p.tags contains 'toprated' and s.toprated_tag_label != blank
+    assign badge_text = s.toprated_tag_label
+  elsif p.tags contains 'new' and s.new_tag_label != blank
+    assign badge_text = s.new_tag_label
+  endif
+
+  assign is_sold_out = true
+  unless p.available
+    assign is_sold_out = true
+  else
+    assign is_sold_out = false
+  endunless
+
+  assign on_sale = false
+  assign percent_off = 0
+  if p.compare_at_price > p.price and p.compare_at_price != blank
+    assign on_sale = true
+    assign price_saved = p.compare_at_price | minus: p.price
+    assign percent_off = price_saved | times: 100 | divided_by: p.compare_at_price | round
+  endif
+
+  assign rating = s.default_rating
+  if p.metafields.reviews.rating.value != blank
+    assign rating = p.metafields.reviews.rating.value
+  endif
+  assign review_count = s.default_review_count
+  if p.metafields.reviews.rating_count.value != blank
+    assign review_count = p.metafields.reviews.rating_count.value
+  endif
+-%}
+<article class="pl-glass pl-card">
+  <a class="pl-shot" href="{{ p.url }}" tabindex="-1">
+    {%- if is_sold_out and s.sold_out_label != blank -%}
+      <span class="pl-pill pl-pill--soldout">{{ s.sold_out_label }}</span>
+    {%- elsif badge_text != blank and s.show_badges -%}
+      <span class="pl-pill">{{ badge_text }}</span>
+    {%- endif -%}
+    {%- render 'purelane-product-art', product: p, class_name: 'pl-card__art', lazy: true -%}
+  </a>
+
+  <h3 class="pl-h4"><a href="{{ p.url }}">{{ p.title }}</a></h3>
+
+  {%- if s.show_rating -%}
+    <p class="pl-rate">
+      <b aria-hidden="true">★ {{ rating }}</b>
+      <span class="pl-rate__sep">·</span>
+      <span>{{ review_count }} reviews</span>
+    </p>
+  {%- endif -%}
+
+  <div class="pl-pr">
+    <strong class="pl-pr__price">{{ p.price | money_without_trailing_zeros }}</strong>
+    {%- if on_sale -%}
+      {%- if s.show_compare_at -%}
+        <s class="pl-pr__compare">{{ p.compare_at_price | money_without_trailing_zeros }}</s>
+      {%- endif -%}
+      {%- if s.show_percent_off and percent_off > 0 -%}
+        <em class="pl-pr__off">{{ percent_off }}% off</em>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  <product-form class="pl-atc">
+    {%- form 'product', p, id: 'purelane-form-' | append: p.id, class: 'pl-atc__form', data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+      <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button
+        type="submit"
+        name="add"
+        class="pl-btn pl-btn--ghost pl-btn--sm pl-atc__btn"
+        {% if is_sold_out %}disabled{% endif %}
+      >
+        {%- if is_sold_out -%}{{ s.sold_out_label }}{%- else -%}{{ s.add_to_cart_label }}{%- endif -%}
+      </button>
+    {%- endform -%}
+  </product-form>
+</article>

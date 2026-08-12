@@ -1,0 +1,24 @@
+{%- liquid
+  assign head_kicker = kicker | default: blank
+  assign head_heading = heading | default: blank
+  assign head_lede = lede | default: blank
+  assign head_align = align | default: 'center'
+-%}
+{%- if head_kicker != blank or head_heading != blank -%}
+  <div class="pl-panel-head{% if head_align == 'left' %} pl-panel-head--left{% endif %}">
+    {%- if head_kicker != blank -%}
+      <p class="pl-kicker">{{ head_kicker }}</p>
+    {%- endif -%}
+    {%- if head_heading != blank -%}
+      <h2 class="pl-d2">{{ head_heading }}</h2>
+    {%- endif -%}
+    <div class="pl-rule" aria-hidden="true">
+      <span class="pl-rule__line"></span>
+      <svg class="pl-rule__leaf" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.8 2.2C8.2 1.6 3.4 4.9 2.6 8.5c-.5 2.3.6 4.6 2.7 5.3 1.6.5 3.2-.1 4.2-1.5 1.8.2 3.6-.8 4.3-2.5v-7.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.4 12.6c3-3 5.4-4.7 8.6-6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span class="pl-rule__line"></span>
+    </div>
+    {%- if head_lede != blank -%}
+      <p class="pl-lede pl-panel-head__lede">{{ head_lede }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

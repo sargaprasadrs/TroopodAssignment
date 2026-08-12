@@ -1,0 +1,81 @@
+{%- liquid
+  assign combo_items = combo.items.value | default: empty
+  assign combo_name = combo.name.value | default: blank
+  assign combo_desc = combo.description.value | default: blank
+  assign combo_price = combo.price.value | default: blank
+  assign combo_compare = combo.compare_at_price.value | default: blank
+  assign combo_save_line = combo.save_line.value | default: blank
+  assign combo_flag = combo.flag.value | default: blank
+  assign combo_fine = combo.fine_print.value | default: blank
+  assign combo_highlight = combo.highlight.value | default: false
+  assign combo_cta_label = combo.cta_label.value | default: s.cta_default_label
+  assign combo_cta_link = combo.cta_link.value | default: s.cta_fallback_link
+
+  assign save_txt = combo_save_line
+  assign computed_save = blank
+  if save_txt == blank and combo_compare != blank and combo_price != blank and combo_compare > combo_price
+    assign computed_save = combo_compare | minus: combo_price
+    assign save_money = computed_save | money_without_trailing_zeros
+    assign save_txt = s.save_currency_prefix | append: save_money
+  endif
+-%}
+<article class="pl-glass pl-combo{% if combo_highlight %} pl-combo--hero{% endif %}">
+  <div class="pl-tray">
+    {%- if save_txt != blank -%}
+      <span class="pl-save">{{ save_txt }}</span>
+    {%- endif -%}
+    {%- if combo_flag != blank -%}
+      <span class="pl-flag">{{ combo_flag }}</span>
+    {%- endif -%}
+    <div class="pl-stack">
+      {%- for item in combo_items -%}
+        <div class="pl-it">
+          {%- assign item_product = item.product.value -%}
+          {%- if item_product != blank -%}
+            {%- render 'purelane-product-art', product: item_product, class_name: 'pl-it__art', lazy: true -%}
+          {%- else -%}
+            <span class="pl-tile" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 3h12v18H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          {%- endif -%}
+          {%- if item.caption.value != blank -%}
+            <span class="pl-it__cap">{{ item.caption.value }}</span>
+          {%- endif -%}
+        </div>
+        {%- unless forloop.last -%}
+          <span class="pl-plus" aria-hidden="true">+</span>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="pl-combo__body">
+    {%- if combo_name != blank -%}
+      <h3 class="pl-d4 pl-combo__title">{{ combo_name }}</h3>
+    {%- endif -%}
+    <div class="pl-cnt">{{ combo_items.size }} products</div>
+    {%- if combo_desc != blank -%}
+      <p class="pl-inc">{{ combo_desc }}</p>
+    {%- endif -%}
+    <div class="pl-prow">
+      {%- if combo_price != blank -%}
+        <strong class="pl-prow__price">{{ combo_price | money_without_trailing_zeros }}</strong>
+      {%- endif -%}
+      {%- if combo_compare != blank and combo_compare > combo_price -%}
+        <s class="pl-prow__compare">{{ combo_compare | money_without_trailing_zeros }}</s>
+      {%- endif -%}
+      {%- if computed_save != blank -%}
+        <em class="pl-prow__save">{{ save_txt }}</em>
+      {%- endif -%}
+    </div>
+    {%- if combo_fine != blank -%}
+      <p class="pl-fine">{{ combo_fine }}</p>
+    {%- endif -%}
+    <a class="pl-btn{% if combo_highlight %} pl-btn--primary{% else %} pl-btn--ghost{% endif %} pl-combo__cta" href="{{ combo_cta_link }}">
+      <span>{{ combo_cta_label }}</span>
+      {%- if combo_highlight -%}
+        <svg class="pl-btn__arrow" viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {%- endif -%}
+    </a>
+  </div>
+</article>

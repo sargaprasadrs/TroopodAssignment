@@ -1,0 +1,64 @@
+{% render 'purelane-assets' %}
+
+<section
+  id="bundles"
+  class="pl-sec purelane-bundles"
+  data-section-type="purelane-bundles"
+  style="--pl-bg-tint: {{ section.settings.background_tint }}; --pl-pt: {{ section.settings.padding_top }}px; --pl-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="pl-wrap">
+    <div class="pl-glass pl-sec-pad">
+      {% render 'purelane-panel-head',
+        kicker: section.settings.kicker,
+        heading: section.settings.heading,
+        lede: section.settings.lede,
+        align: 'center'
+      %}
+
+      {%- assign bundle_list = section.settings.bundles -%}
+      {%- if bundle_list.size > 0 -%}
+        <div class="pl-tiers">
+          {%- for bundle in bundle_list limit: section.settings.limit -%}
+            <div class="pl-rv{% if forloop.index == 2 %} pl-rv-2{% else %} pl-rv-3{% endif %}">
+              {%- render 'purelane-bundle-card', bundle: bundle, s: section.settings -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="pl-empty">{{ section.settings.empty_state_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Bundles",
+  "tag": "section",
+  "class": "purelane-bundles",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Build your bundle" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "One box. Every room." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way." },
+    { "type": "metaobject_list", "id": "bundles", "label": "Bundles", "metaobject_type": "bundle" },
+    { "type": "range", "id": "limit", "label": "Bundle count", "min": 1, "max": 6, "step": 1, "default": 3 },
+    { "type": "textarea", "id": "empty_state_text", "label": "Empty state text", "default": "Add bundles from the metafields section to populate the tiers." },
+    { "type": "header", "content": "Prices" },
+    { "type": "text", "id": "per_product_prefix", "label": "Per-product prefix", "default": "Flat " },
+    { "type": "text", "id": "per_product_suffix", "label": "Per-product suffix", "default": " per product" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "cta_default_label", "label": "CTA label fallback", "default": "Build this box" },
+    { "type": "text", "id": "cta_fallback_link", "label": "CTA link fallback", "default": "#shop" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "panel_tint", "label": "Panel tint", "default": "#00000000" },
+    { "type": "range", "id": "panel_radius", "label": "Panel radius", "min": 16, "max": 32, "step": 1, "unit": "px", "default": 26 },
+    { "type": "color", "id": "background_tint", "label": "Background tint", "default": "#00000000" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 34 }
+  ],
+  "presets": [
+    { "name": "Purelane Bundles" }
+  ]
+}
+{% endschema %}

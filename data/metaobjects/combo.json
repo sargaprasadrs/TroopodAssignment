@@ -1,7 +1,7 @@
 {
   "type": "combo",
   "name": "Combo",
-  "description": "Product group card shown in the #combos rail. Marketing creates and edits combos in Admin without touching code. Savings are computed from product compare-at prices in Liquid - never stored here.",
+  "description": "Product group card shown in the #combos rail. Marketing creates and edits combos in Admin without touching code. Deal price and compare-at (sum of MRPs) live here; the save line is always computed in Liquid from them - never hardcoded.",
   "access": {
     "admin": "MERCHANT_READ_WRITE",
     "storefront": "READ"
@@ -12,56 +12,80 @@
       "key": "name",
       "type": "single_line_text_field",
       "required": true,
-      "description": "Card title, e.g. \"Everyday Essentials Combo\"."
+      "description": "Card title, e.g. \"Kitchen essentials\"."
     },
     {
       "name": "Description",
       "key": "description",
       "type": "multi_line_text_field",
       "required": false,
-      "description": "Optional short description under the title."
+      "description": "Rendered as the \"Includes: ...\" copy on the card."
     },
     {
-      "name": "Products",
-      "key": "products",
-      "type": "list.product_reference",
+      "name": "Items",
+      "key": "items",
+      "type": "list.metaobject_reference",
       "required": true,
-      "description": "Products in the combo, in display order. Prices and savings are read live from each product."
+      "description": "Tray stack, order preserved. Each item references a `combo_item` metaobject.",
+      "validations": [
+        { "name": "metaobject_definition", "value": "combo_item" }
+      ]
     },
     {
-      "name": "Badge text",
-      "key": "badge_text",
-      "type": "single_line_text_field",
-      "required": false,
-      "description": "Optional small flag on the card, e.g. \"Most popular\". Empty hides it."
+      "name": "Price",
+      "key": "price",
+      "type": "number_decimal",
+      "required": true,
+      "description": "Deal price shown on the card (store currency)."
     },
     {
-      "name": "Includes line",
-      "key": "includes_line",
+      "name": "Compare-at price",
+      "key": "compare_at_price",
+      "type": "number_decimal",
+      "required": false,
+      "description": "Sum of the products' MRPs, for the strikethrough + computed save row. Empty hides the save row."
+    },
+    {
+      "name": "Save line",
+      "key": "save_line",
       "type": "single_line_text_field",
       "required": false,
-      "description": "Label before the product count, e.g. \"Includes\"."
+      "description": "Optional override for the save pill (e.g. \"Biggest saving\"). Empty = computed from price vs compare-at."
+    },
+    {
+      "name": "Flag",
+      "key": "flag",
+      "type": "single_line_text_field",
+      "required": false,
+      "description": "Teal corner pill, e.g. \"Most popular\". Empty hides it."
+    },
+    {
+      "name": "Highlight",
+      "key": "highlight",
+      "type": "boolean",
+      "required": false,
+      "description": "Hero variant: amber ring + primary CTA."
     },
     {
       "name": "Fine print",
       "key": "fine_print",
       "type": "single_line_text_field",
       "required": false,
-      "description": "Small print under the price row, e.g. \"Free shipping over Rs. 999\"."
+      "description": "Small print under the price row, e.g. \"Inclusive of all taxes · COD available\"."
     },
     {
       "name": "CTA label",
       "key": "cta_label",
       "type": "single_line_text_field",
       "required": false,
-      "description": "Button label, e.g. \"Add combo to cart\". Falls back to a sensible default when empty."
+      "description": "Button label, e.g. \"Shop bundle\". Empty falls back to the section default."
     },
     {
-      "name": "Is most popular",
-      "key": "is_most_popular",
-      "type": "boolean",
+      "name": "CTA link",
+      "key": "cta_link",
+      "type": "url",
       "required": false,
-      "description": "Highlights the card as the default/featured combo."
+      "description": "Where \"Shop bundle\" goes. Empty falls back to the section default link."
     }
   ]
 }

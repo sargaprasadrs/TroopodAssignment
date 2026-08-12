@@ -1,0 +1,92 @@
+{% render 'purelane-assets' %}
+
+<section
+  id="reviews"
+  class="pl-revband purelane-reviews"
+  data-section-type="purelane-reviews"
+  style="--pl-bg-tint: {{ section.settings.background_tint }}; --pl-pt: {{ section.settings.padding_top }}px; --pl-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="pl-wrap">
+    <div class="pl-revhead pl-rv">
+      {%- if section.settings.kicker != blank -%}
+        <p class="pl-kicker">{{ section.settings.kicker }}</p>
+      {%- endif -%}
+      {%- if section.settings.show_aggregates -%}
+        <div class="pl-agg">
+          {%- if section.settings.show_stars -%}
+            <span class="pl-st" aria-hidden="true">★★★★★</span>
+          {%- endif -%}
+          <b class="pl-agg__num">{{ section.settings.rating }}</b>
+          <span class="pl-agg__tx">{{ section.settings.review_count_prefix }}{{ section.settings.review_count_suffix }}</span>
+        </div>
+        <div class="pl-agg">
+          <span class="pl-agg__tx">{{ section.settings.homes_prefix }}</span>
+          <b class="pl-agg__num">{{ section.settings.homes_value }}</b>
+          <span class="pl-agg__tx">{{ section.settings.homes_suffix }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- assign review_list = section.settings.reviews -%}
+    {%- if review_list.size > 0 -%}
+      {%- assign repeats = 2 -%}
+      {%- if review_list.size < 4 -%}
+        {%- assign repeats = 4 -%}
+      {%- endif -%}
+      <div
+        class="pl-revrail pl-rv pl-rv-2"
+        data-reviews
+        data-pause-on-hover="{{ section.settings.pause_on_hover }}"
+        style="--pl-speed: {{ section.settings.speed }}s; --pl-card-w: {{ section.settings.card_width }}px;{% if section.settings.edge_fade %} --pl-fade: 1;{% else %} --pl-fade: 0;{% endif %}"
+      >
+        <div class="pl-revtrack">
+          {%- for r in (1..repeats) -%}
+            <div class="pl-revgroup"{% if forloop.index > 1 %} aria-hidden="true"{% endif %}>
+              {%- for review in review_list -%}
+                {%- render 'purelane-review-card', review: review -%}
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <p class="pl-empty">{{ section.settings.empty_state_text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Reviews",
+  "tag": "section",
+  "class": "purelane-reviews",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "That's what they said" },
+    { "type": "header", "content": "Aggregates (merchant-editable)" },
+    { "type": "checkbox", "id": "show_aggregates", "label": "Show aggregates", "default": true },
+    { "type": "checkbox", "id": "show_stars", "label": "Show stars", "default": true },
+    { "type": "range", "id": "rating", "label": "Rating", "min": 0, "max": 5, "step": 0.1, "default": 4.8 },
+    { "type": "text", "id": "review_count_prefix", "label": "Review count prefix", "default": "from " },
+    { "type": "text", "id": "review_count_suffix", "label": "Review count suffix", "default": "+ reviews" },
+    { "type": "text", "id": "homes_prefix", "label": "Homes prefix", "default": "Loved by " },
+    { "type": "text", "id": "homes_value", "label": "Homes value", "default": "12 lakh+" },
+    { "type": "text", "id": "homes_suffix", "label": "Homes suffix", "default": " homes" },
+    { "type": "header", "content": "Reviews" },
+    { "type": "metaobject_list", "id": "reviews", "label": "Reviews", "metaobject_type": "review" },
+    { "type": "textarea", "id": "empty_state_text", "label": "Empty state text", "default": "Reviews will appear here once you add them from the metafields section." },
+    { "type": "header", "content": "Marquee" },
+    { "type": "range", "id": "speed", "label": "Scroll speed (seconds per loop)", "min": 20, "max": 90, "step": 1, "unit": "s", "default": 52 },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover / focus", "default": true },
+    { "type": "checkbox", "id": "edge_fade", "label": "Fade the edges", "default": true },
+    { "type": "range", "id": "card_width", "label": "Card width", "min": 240, "max": 320, "step": 2, "unit": "px", "default": 284 },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "background_tint", "label": "Background tint", "default": "#00000000" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 34 }
+  ],
+  "presets": [
+    { "name": "Purelane Reviews" }
+  ]
+}
+{% endschema %}

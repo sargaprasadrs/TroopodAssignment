@@ -1,0 +1,88 @@
+{% render 'purelane-assets' %}
+
+<section
+  id="combos"
+  class="pl-sec purelane-combos"
+  data-section-type="purelane-combos"
+  style="--pl-bg-tint: {{ section.settings.background_tint }}; --pl-pt: {{ section.settings.padding_top }}px; --pl-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="pl-wrap">
+    {% render 'purelane-panel-head',
+      kicker: section.settings.kicker,
+      heading: section.settings.heading,
+      lede: section.settings.lede,
+      align: 'center'
+    %}
+
+    {%- assign combo_list = section.settings.combos -%}
+    {%- if combo_list.size > 0 -%}
+      {%- assign combo_limit = section.settings.combo_count_override -%}
+      {%- if combo_limit == 0 -%}
+        {%- assign combo_limit = 100 -%}
+      {%- endif -%}
+
+      <div
+        class="pl-comborail"
+        data-rail
+        tabindex="0"
+        role="region"
+        aria-label="{{ section.settings.heading | default: 'Best selling combos' }}"
+        style="--pl-card-w: {{ section.settings.card_width }}px"
+      >
+        {%- for combo in combo_list limit: combo_limit -%}
+          <div class="pl-rv pl-rv-{% assign rv_i = forloop.index | modulo: 3 %}{% if rv_i == 0 %}3{% else %}{{ rv_i }}{% endif %}">
+            {%- render 'purelane-combo-card', combo: combo, s: section.settings -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_swipe_cue -%}
+        <p class="pl-swipecue">
+          <span>{{ section.settings.swipe_cue_text }}</span>
+          {% render 'purelane-icon', icon: 'arrow', size: 13, class: 'pl-swipecue__arrow' %}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.show_rail_note -%}
+        <p class="pl-railnote">{{ section.settings.rail_note }}</p>
+      {%- endif -%}
+    {%- else -%}
+      <p class="pl-empty">{{ section.settings.empty_state_text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Combos",
+  "tag": "section",
+  "class": "purelane-combos",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Pre-built to save you money" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best selling combos" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Swipe through the boxes people order most. Each one is already priced below buying the same products on their own." },
+    { "type": "metaobject_list", "id": "combos", "label": "Combos", "metaobject_type": "combo" },
+    { "type": "range", "id": "combo_count_override", "label": "Combo count (0 = all)", "min": 0, "max": 8, "step": 1, "default": 0 },
+    { "type": "textarea", "id": "empty_state_text", "label": "Empty state text", "default": "Add combos from the metafields section to populate this rail." },
+    { "type": "header", "content": "Rail" },
+    { "type": "checkbox", "id": "show_swipe_cue", "label": "Show swipe cue", "default": true },
+    { "type": "text", "id": "swipe_cue_text", "label": "Swipe cue text", "default": "Swipe for more combos" },
+    { "type": "checkbox", "id": "show_rail_note", "label": "Show rail note", "default": true },
+    { "type": "textarea", "id": "rail_note", "label": "Rail note", "default": "Tapping 'Shop bundle' opens the bundle picker with these products already added. You can still swap anything before you pay." },
+    { "type": "range", "id": "card_width", "label": "Card width", "min": 240, "max": 360, "step": 2, "unit": "px", "default": 302 },
+    { "type": "header", "content": "Buttons & savings" },
+    { "type": "text", "id": "cta_default_label", "label": "CTA label fallback", "default": "Shop bundle" },
+    { "type": "text", "id": "cta_fallback_link", "label": "CTA link fallback", "default": "#shop" },
+    { "type": "text", "id": "save_currency_prefix", "label": "Save line prefix", "default": "You save " },
+    { "type": "text", "id": "save_label_suffix", "label": "Save line suffix", "default": "" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "background_tint", "label": "Background tint", "default": "#00000000" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 34 }
+  ],
+  "presets": [
+    { "name": "Purelane Combos" }
+  ]
+}
+{% endschema %}

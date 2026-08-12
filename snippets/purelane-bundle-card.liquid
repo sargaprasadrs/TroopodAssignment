@@ -1,0 +1,72 @@
+{%- liquid
+  assign bundle_products = bundle.products.value | default: empty
+  assign product_count = bundle_products.size
+  assign bundle_name = bundle.name.value | default: blank
+  assign bundle_tag = bundle.tag.value | default: blank
+  assign bundle_price = bundle.price.value | default: blank
+  assign bundle_compare = bundle.compare_at_price.value | default: blank
+  assign bundle_bullets = bundle.bullets.value | default: empty
+  assign bundle_highlight = bundle.highlight.value | default: false
+  assign bundle_cta_label = bundle.cta_label.value | default: s.cta_default_label
+  assign bundle_cta_link = bundle.cta_link.value | default: s.cta_fallback_link
+
+  assign flat_per = blank
+  if bundle_price != blank and product_count > 0
+    assign flat_per = bundle_price | times: 1.0 | divided_by: product_count | round
+  endif
+-%}
+<article class="pl-glass pl-tier{% if bundle_highlight %} pl-tier--best{% endif %}">
+  {%- if bundle_tag != blank -%}
+    <span class="pl-tag">{{ bundle_tag }}</span>
+  {%- endif -%}
+
+  <div class="pl-tierpix{% if product_count >= 5 %} pl-tierpix--five{% endif %}" aria-hidden="true">
+    {%- for product in bundle_products -%}
+      {%- if product != blank -%}
+        {%- render 'purelane-product-art', product: product, class_name: 'pl-tierpix__art', lazy: true -%}
+      {%- else -%}
+        <span class="pl-tile pl-tierpix__tile"></span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if bundle_name != blank -%}
+    <h3 class="pl-d3 pl-tier__name">{{ bundle_name }}</h3>
+  {%- endif -%}
+
+  <div class="pl-qty">
+    <span class="pl-qty__num">{{ product_count }}</span>
+    <small class="pl-qty__label">Products</small>
+  </div>
+
+  {%- if bundle_price != blank -%}
+    <div class="pl-price">
+      <strong>{{ bundle_price | money_without_trailing_zeros }}</strong>
+      {%- if bundle_compare != blank and bundle_compare > bundle_price -%}
+        <s class="pl-price__compare">{{ bundle_compare | money_without_trailing_zeros }}</s>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if flat_per != blank -%}
+    <p class="pl-body-s pl-perproduct">{{ s.per_product_prefix }}{{ flat_per | money_without_trailing_zeros }}{{ s.per_product_suffix }}</p>
+  {%- endif -%}
+
+  {%- if bundle_bullets.size > 0 -%}
+    <ul class="pl-ul">
+      {%- for bullet in bundle_bullets -%}
+        <li>
+          <svg class="pl-ul__check" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>{{ bullet }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <a class="pl-btn{% if bundle_highlight %} pl-btn--primary{% else %} pl-btn--ghost{% endif %} pl-tier__cta" href="{{ bundle_cta_link }}">
+    <span>{{ bundle_cta_label }}</span>
+    {%- if bundle_highlight -%}
+      <svg class="pl-btn__arrow" viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    {%- endif -%}
+  </a>
+</article>

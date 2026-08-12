@@ -1,0 +1,20 @@
+{%- liquid
+  assign icon_size = size | default: 18
+  assign icon_class = class | default: ''
+-%}
+{%- case icon -%}
+  {%- when 'leaf' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 24 24" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 4C11 3 5 8.5 4.5 14c-.3 3.4 1.7 6.2 4.7 6.8 2.3.5 4.6-.5 5.8-2.4 1 .1 2.2-.2 3-1 1.6-1.5 2-4.2 2-7.4"/><path d="M5.5 18.5C9 14.5 13 11.5 17.5 9"/></svg>
+  {%- when 'shield' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 24 24" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3 20 6v6c0 5-3.4 8.3-8 9-4.6-.7-8-4-8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+  {%- when 'drop' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 24 24" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3s6.5 7 6.5 12a6.5 6.5 0 0 1-13 0C5.5 10 12 3 12 3z"/></svg>
+  {%- when 'sparkle' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 24 24" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3c.8 4.6 3.4 7.2 8 8-4.6.8-7.2 3.4-8 8-.8-4.6-3.4-7.2-8-8 4.6-.8 7.2-3.4 8-8z"/></svg>
+  {%- when 'heart' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 24 24" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.5C7 16.5 3.5 13 3.5 9.3 3.5 6.6 5.6 5 7.9 5c1.6 0 3.1.9 4.1 2.4C13 5.9 14.5 5 16.1 5c2.3 0 4.4 1.6 4.4 4.3 0 3.7-3.5 7.2-8.5 11.2z"/></svg>
+  {%- when 'arrow' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 16 16" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg>
+  {%- when 'check' -%}
+    <svg class="{{ icon_class }}" viewBox="0 0 14 14" width="{{ icon_size }}" height="{{ icon_size }}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>
+{%- endcase -%}

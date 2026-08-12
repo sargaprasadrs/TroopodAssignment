@@ -1,0 +1,35 @@
+{%- liquid
+  assign rev_author = review.author.value | default: blank
+  assign rev_product = review.product_label.value | default: blank
+  assign rev_rating = review.rating.value | default: 5
+  assign rev_rating = rev_rating | at_least: 0 | at_most: 5 | round
+  assign rev_headline = review.headline.value | default: blank
+  assign rev_quote = review.quote.value | default: blank
+  assign rev_verified = review.verified.value | default: false
+  assign empty_stars = 5 | minus: rev_rating
+-%}
+<article class="pl-glass-2 pl-rcard">
+  <div class="pl-st" role="img" aria-label="Rated {{ rev_rating }} out of 5">
+    <span aria-hidden="true">{%- for i in (1..rev_rating) -%}★{%- endfor -%}{%- for i in (1..empty_stars) -%}☆{%- endfor -%}</span>
+  </div>
+
+  {%- if rev_headline != blank -%}
+    <h5 class="pl-rcard__headline">{{ rev_headline }}</h5>
+  {%- endif -%}
+
+  {%- if rev_quote != blank -%}
+    <p class="pl-rcard__quote">{{ rev_quote }}</p>
+  {%- endif -%}
+
+  <div class="pl-who">
+    {%- if rev_verified -%}
+      <svg class="pl-who__check" viewBox="0 0 14 14" width="12" height="12" aria-hidden="true"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    {%- endif -%}
+    {%- if rev_author != blank -%}
+      <b class="pl-who__name">{{ rev_author }}</b>
+    {%- endif -%}
+    {%- if rev_product != blank -%}
+      <span class="pl-who__product">· {{ rev_product }}</span>
+    {%- endif -%}
+  </div>
+</article>

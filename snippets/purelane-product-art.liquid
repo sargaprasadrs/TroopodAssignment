@@ -1,0 +1,108 @@
+{%- liquid
+  assign art_key = art | default: blank
+  assign art_class = class_name | default: ''
+  assign art_lazy = lazy | default: true
+
+  if art_key == blank and product != blank
+    assign art_handle = product.handle | downcase
+    assign art_type = product.type | downcase
+    if art_handle contains 'tap'
+      assign art_key = 'tap'
+    elsif art_handle contains 'kitchen' or art_handle contains 'dish'
+      assign art_key = 'kitchen'
+    elsif art_handle contains 'laundry' or art_handle contains 'detergent' or art_handle contains 'wash'
+      assign art_key = 'laundry'
+    elsif art_handle contains 'eraser'
+      assign art_key = 'box'
+    elsif art_type contains 'personal care' or art_handle contains 'handwash'
+      assign art_key = 'bottle'
+    else
+      assign art_key = 'bottle'
+    endif
+  endif
+  if art_key == blank
+    assign art_key = 'bottle'
+  endif
+
+  if product != blank and product.featured_image != blank
+    if art_lazy
+      assign art_loading = 'lazy'
+    else
+      assign art_loading = 'eager'
+    endif
+-%}
+  <img
+    class="pl-art pl-art--img {{ art_class }}"
+    src="{{ product.featured_image | image_url: width: 640 }}"
+    alt="{{ product.featured_image.alt | default: product.title | escape }}"
+    width="{{ product.featured_image.width }}"
+    height="{{ product.featured_image.height }}"
+    loading="{{ art_loading }}"
+    decoding="async"
+  >
+{%- else -%}
+  {%- case art_key -%}
+    {%- when 'tap' -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 120 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M52 44 h16 v16 h-16 z" fill="#4b3a8f"/><rect x="40" y="18" width="40" height="18" rx="6" fill="#6b55b8"/>
+        <path d="M46 60 h28 c9 0 16 7 16 16 v132 c0 24 -20 44 -30 44 s-30 -20 -30 -44 v-132 c0 -9 7 -16 16 -16 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M46 78 h28 v128 h-28 z" fill="#00706a"/>
+        <path d="M52 86 c6 -8 12 -8 16 0 c-4 3 -8 5 -8 9 c0 -4 -4 -6 -8 -9 z" fill="#eafcf0"/>
+        <circle cx="60" cy="168" r="13" fill="none" stroke="#eafcf0" stroke-width="5"/>
+        <path d="M42 232 h36 v8 h-36 z" fill="#c9761d"/>
+      </svg>
+    {%- when 'kitchen' -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 120 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M40 34 c0 -12 8 -18 20 -18 s20 6 20 18 v6 h-40 z" fill="#4b3a8f"/>
+        <path d="M42 52 h36 c10 0 18 8 18 18 v150 c0 24 -20 44 -36 44 s-36 -20 -36 -44 v-150 c0 -10 8 -18 18 -18 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <rect x="36" y="120" width="48" height="84" rx="10" fill="#00706a"/>
+        <path d="M48 134 h24 v56 h-24 z" fill="#eafcf0" opacity=".9"/>
+        <circle cx="60" cy="162" r="6" fill="#00706a"/>
+        <path d="M44 232 h32 v8 h-32 z" fill="#c9761d"/>
+      </svg>
+    {%- when 'laundry' -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 120 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M46 30 h28 c12 0 22 10 22 22 v14 h-72 v-14 c0 -12 10 -22 22 -22 z" fill="#4b3a8f"/>
+        <path d="M34 66 h52 l-4 154 c0 20 -9 36 -22 36 s-22 -16 -22 -36 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M42 110 h36 v60 h-36 z" fill="#00706a"/>
+        <path d="M60 122 v36 M52 128 l8 8 l8 -8" stroke="#eafcf0" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="38" y="196" width="44" height="8" rx="4" fill="#c9761d"/>
+      </svg>
+    {%- when 'box' -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 120 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M60 96 L92 116 L60 136 L28 116 Z" fill="#4b3a8f"/>
+        <path d="M28 116 v72 l32 18 v-72 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M92 116 v72 l-32 18 v-72 z" fill="#cdc1ea" stroke="#b6a6dc" stroke-width="2"/>
+        <rect x="38" y="150" width="16" height="22" rx="3" fill="#00706a"/>
+        <rect x="66" y="150" width="16" height="22" rx="3" fill="#00706a" opacity=".75"/>
+        <path d="M46 232 h28 v8 h-28 z" fill="#c9761d"/>
+      </svg>
+    {%- when 'combo2' -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 220 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M70 60 h20 c9 0 16 7 16 16 v136 c0 24 -16 44 -28 44 s-28 -20 -28 -44 v-136 c0 -9 7 -16 16 -16 z" fill="#cdc1ea" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M130 60 h20 c9 0 16 7 16 16 v136 c0 24 -16 44 -28 44 s-28 -20 -28 -44 v-136 c0 -9 7 -16 16 -16 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <rect x="56" y="18" width="28" height="14" rx="5" fill="#4b3a8f"/><rect x="136" y="18" width="28" height="14" rx="5" fill="#6b55b8"/>
+        <path d="M66 100 h28 v60 h-28 z" fill="#00706a"/><path d="M126 100 h28 v60 h-28 z" fill="#00706a" opacity=".8"/>
+        <path d="M56 236 h110 v10 h-110 z" fill="#c9761d"/>
+      </svg>
+    {%- when 'combo3' -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 240 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M52 60 h18 c8 0 14 6 14 14 v134 c0 22 -14 40 -24 40 s-24 -18 -24 -40 v-134 c0 -8 6 -14 14 -14 z" fill="#cdc1ea" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M111 56 h18 c8 0 14 6 14 14 v138 c0 22 -14 40 -24 40 s-24 -18 -24 -40 v-138 c0 -8 6 -14 14 -14 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M170 60 h18 c8 0 14 6 14 14 v134 c0 22 -14 40 -24 40 s-24 -18 -24 -40 v-134 c0 -8 6 -14 14 -14 z" fill="#c4b6e4" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M40 18 h24 v12 h-24 z" fill="#4b3a8f"/><path d="M108 16 h22 v12 h-22 z" fill="#6b55b8"/><path d="M176 18 h24 v12 h-24 z" fill="#4b3a8f"/>
+        <path d="M48 100 h24 v58 h-24 z" fill="#00706a"/><path d="M107 98 h24 v60 h-24 z" fill="#00706a" opacity=".85"/><path d="M166 100 h24 v58 h-24 z" fill="#00706a" opacity=".7"/>
+        <path d="M40 238 h160 v10 h-160 z" fill="#c9761d"/>
+      </svg>
+    {%- else -%}
+      <svg class="pl-art pl-art--svg {{ art_class }}" viewBox="0 0 120 320" role="presentation" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <path d="M42 18 c0 -10 8 -16 18 -16 s18 6 18 16 v8 h-36 z" fill="#6b55b8"/>
+        <path d="M36 46 h48 c10 0 18 8 18 18 v150 c0 26 -20 46 -42 46 s-42 -20 -42 -46 v-150 c0 -10 8 -18 18 -18 z" fill="#dcd1f2" stroke="#b6a6dc" stroke-width="2"/>
+        <path d="M36 46 h48 v30 h-48 z" fill="#4b3a8f"/>
+        <rect x="30" y="130" width="60" height="82" rx="10" fill="#00706a"/>
+        <path d="M42 146 h36 v20 h-36 z" fill="#eafcf0" opacity=".9"/>
+        <path d="M50 190 c4 -6 8 -6 10 0 c-3 2 -5 4 -5 6 c0 -2 -3 -4 -5 -6 z" fill="#eafcf0"/>
+        <path d="M42 250 h36 v8 h-36 z" fill="#c9761d"/>
+      </svg>
+  {%- endcase -%}
+{%- endif -%}

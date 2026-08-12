@@ -1,7 +1,7 @@
 {
   "type": "bundle",
   "name": "Bundle",
-  "description": "Tier card shown in the #bundles section (Starter 2 / Most popular 3 / Whole home 5). Prices and savings come live from the referenced products.",
+  "description": "Tier card shown in the #bundles section (Starter 2 / Most popular 3 / Whole home 5). Product count is derived from the `products` list so marketing can't desync the number and the art; the per-product line is computed from price/count in Liquid.",
   "access": {
     "admin": "MERCHANT_READ_WRITE",
     "storefront": "READ"
@@ -12,35 +12,63 @@
       "key": "name",
       "type": "single_line_text_field",
       "required": true,
-      "description": "Tier title, e.g. \"Starter\"."
+      "description": "Tier title, e.g. \"Starter 2\"."
     },
     {
       "name": "Tag / badge",
       "key": "tag",
       "type": "single_line_text_field",
       "required": false,
-      "description": "Flag above the title, e.g. \"Starter 2\", \"Most popular 3\", \"Whole home 5\". Empty hides it."
+      "description": "Pill above the title, e.g. \"Starter\", \"Most popular\", \"Whole home\"."
     },
     {
       "name": "Products",
       "key": "products",
       "type": "list.product_reference",
       "required": true,
-      "description": "Products in the tier, in display order. Quantity shown on the card is computed from this list."
+      "description": "Products in the tier, order preserved. Renders the art strip; count is derived from this list."
+    },
+    {
+      "name": "Price",
+      "key": "price",
+      "type": "number_decimal",
+      "required": true,
+      "description": "Flat bundle price (store currency)."
+    },
+    {
+      "name": "Compare-at price",
+      "key": "compare_at_price",
+      "type": "number_decimal",
+      "required": false,
+      "description": "MRP sum for the strikethrough. Empty hides it."
     },
     {
       "name": "Bullets",
       "key": "bullets",
-      "type": "rich_text",
+      "type": "list.single_line_text_field",
       "required": false,
-      "description": "Per-product / benefit bullet list rendered on the card."
+      "description": "Check list items (2-3). Each bullet renders with a green check."
+    },
+    {
+      "name": "Highlight",
+      "key": "highlight",
+      "type": "boolean",
+      "required": false,
+      "description": "Most-popular tier: amber ring + primary CTA."
     },
     {
       "name": "CTA label",
       "key": "cta_label",
       "type": "single_line_text_field",
       "required": false,
-      "description": "Button label, e.g. \"Buy this bundle\". Falls back to a sensible default when empty."
+      "description": "Button label, e.g. \"Build this box\". Empty falls back to the section default."
+    },
+    {
+      "name": "CTA link",
+      "key": "cta_link",
+      "type": "url",
+      "required": false,
+      "description": "Where the CTA goes. Empty falls back to the section default link."
     }
   ]
 }
