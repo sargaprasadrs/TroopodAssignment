@@ -30,9 +30,9 @@ flowchart LR
 |---|---|---|
 | **1 · Recon & Spec** | Design audit, fix-list, five pixel-accurate section specs | ✅ **Committed** |
 | **2 · Setup & Data** | Locked decisions, seed data, metaobject definitions | 🟡 Setup committed — **blocked on dev store credentials** |
-| **3 · Build** | Five sections + shared snippets on stock Dawn | ⏳ Pending |
+| **3 · Build** | Five sections + shared snippets on stock Dawn | 🟡 In progress — sections + snippets landed; assets/template pending |
 | **4 · QA & Hardening** | Pixel checks, theme-editor stress test, a11y, CWV | 🟡 In progress — harness + prototype baseline done; store/Part 3 checks pending |
-| **5 · Delivery** | Notes, submission to `nj@troopod.io` | ⏳ Pending |
+| **5 · Delivery** | Notes, submission to `nj@troopod.io` | 🟡 Notes committed + pushed to GitHub; email waits on dev-store creds |
 
 ---
 
