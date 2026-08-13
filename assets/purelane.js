@@ -1,4 +1,7 @@
 (function () {
+  /* Gate reveal hiding on OUR class so content is never invisible if this
+     asset fails to load (Dawn's html.js is added unconditionally by Dawn). */
+  document.documentElement.classList.add('pl-js');
   if (window.__purelaneLoaded) return;
   window.__purelaneLoaded = true;
 

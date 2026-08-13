@@ -8,12 +8,14 @@
   --pl-brand-lt: #6b55b8;
   --pl-paper: #241a3d;
   --pl-paper-2: rgba(36, 26, 61, 0.78);
-  --pl-paper-3: rgba(36, 26, 61, 0.56);
+  --pl-paper-3: rgba(36, 26, 61, 0.68);
   --pl-accent: #b8701c;
   --pl-accent-2: #c9761d;
+  --pl-accent-deep: #8f5410;
   --pl-surface: #17102b;
   --pl-green: #4f7d10;
-  --pl-star: #7a9c1e;
+  --pl-green-deep: #3f640c;
+  --pl-star: #6e8c1a;
   --pl-teal-ink: #01423b;
   --pl-on-teal: #f4fdf6;
   --pl-g-bg: linear-gradient(158deg, rgba(255, 255, 255, 0.8), rgba(236, 230, 247, 0.56) 58%, rgba(222, 212, 240, 0.5));
@@ -232,22 +234,22 @@ body:has(.purelane-hero) {
 }
 
 /* ---------- Reveal on scroll ---------- */
-html.js .pl-rv {
+html.pl-js .pl-rv {
   opacity: 0;
   transform: translateY(30px);
   filter: blur(7px);
   transition: opacity 0.95s var(--pl-ease), transform 0.95s var(--pl-ease), filter 0.95s var(--pl-ease);
 }
-html.js .pl-rv.pl-in {
+html.pl-js .pl-rv.pl-in {
   opacity: 1;
   transform: none;
   filter: none;
 }
-html.js .pl-rv-1 { transition-delay: 0.09s; }
-html.js .pl-rv-2 { transition-delay: 0.18s; }
-html.js .pl-rv-3 { transition-delay: 0.27s; }
-html.js .pl-rv-4 { transition-delay: 0.36s; }
-html.js .pl-rv-5 { transition-delay: 0.45s; }
+html.pl-js .pl-rv-1 { transition-delay: 0.09s; }
+html.pl-js .pl-rv-2 { transition-delay: 0.18s; }
+html.pl-js .pl-rv-3 { transition-delay: 0.27s; }
+html.pl-js .pl-rv-4 { transition-delay: 0.36s; }
+html.pl-js .pl-rv-5 { transition-delay: 0.45s; }
 
 /* ---------- Panel head & rule ---------- */
 .pl-panel-head {
@@ -356,7 +358,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(201, 118, 29, 0.34);
-  color: var(--pl-green);
+  color: var(--pl-green-deep);
   pointer-events: none;
 }
 .pl-pill--soldout {
@@ -390,7 +392,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   margin: 0 0 10px;
 }
 .pl-rate b {
-  color: var(--pl-accent);
+  color: var(--pl-accent-deep);
   font-weight: 600;
 }
 .pl-rate__sep {
@@ -417,7 +419,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   font-style: normal;
   font-size: 10px;
   font-weight: 800;
-  color: var(--pl-accent);
+  color: var(--pl-accent-deep);
 }
 .pl-atc__btn {
   width: 100%;
@@ -580,7 +582,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   font-weight: 800;
   letter-spacing: 0.17em;
   text-transform: uppercase;
-  color: var(--pl-accent);
+  color: var(--pl-accent-deep);
   margin-bottom: 3px;
 }
 .pl-ptag__val {
@@ -604,7 +606,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   margin-top: 6px;
   font-size: 8.4px;
   font-weight: 800;
-  color: var(--pl-green);
+  color: var(--pl-green-deep);
   background: rgba(201, 118, 29, 0.16);
   border: 1px solid rgba(201, 118, 29, 0.36);
   padding: 2px 7px;
@@ -617,6 +619,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   margin-top: 8px;
 }
 .pl-hdot {
+  position: relative;
   width: 6px;
   height: 6px;
   border-radius: 999px;
@@ -625,6 +628,12 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   background: rgba(75, 58, 143, 0.22);
   cursor: pointer;
   transition: width 0.35s var(--pl-ease), background-color 0.35s var(--pl-ease);
+}
+.pl-hdot::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 999px;
 }
 .pl-hdot.pl-on {
   width: 20px;
@@ -729,7 +738,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--pl-green);
+  color: var(--pl-green-deep);
   background: rgba(255, 255, 255, 0.84);
   border: 1px solid rgba(201, 118, 29, 0.34);
   padding: 4px 9px;
@@ -837,7 +846,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   font-style: normal;
   font-size: 9.5px;
   font-weight: 800;
-  color: var(--pl-green);
+  color: var(--pl-green-deep);
   background: rgba(201, 118, 29, 0.14);
   border: 1px solid rgba(201, 118, 29, 0.34);
   padding: 3px 7px;
@@ -915,7 +924,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--pl-green);
+  color: var(--pl-green-deep);
   background: rgba(201, 118, 29, 0.14);
   border: 1px solid rgba(201, 118, 29, 0.34);
   padding: 5px 11px;
@@ -1031,7 +1040,10 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
 .pl-agg {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
+}
+.pl-revhead .pl-kicker {
+  margin: 0;
 }
 .pl-st {
   font-size: 12px;
@@ -1043,7 +1055,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   font-family: var(--pl-font-display);
   font-size: 16px;
   font-weight: 700;
-  color: var(--pl-accent);
+  color: var(--pl-accent-deep);
 }
 .pl-agg__tx {
   font-size: 11.5px;
@@ -1064,8 +1076,8 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
   width: max-content;
   animation: pl-marq var(--pl-speed, 52s) linear infinite;
 }
-.pl-revrail:hover .pl-revtrack,
-.pl-revrail:focus-within .pl-revtrack {
+.pl-revrail[data-pause-on-hover="true"]:hover .pl-revtrack,
+.pl-revrail[data-pause-on-hover="true"]:focus-within .pl-revtrack {
   animation-play-state: paused;
 }
 .pl-revgroup {
@@ -1239,7 +1251,7 @@ html.js .pl-rv-5 { transition-delay: 0.45s; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html.js .pl-rv {
+  html.pl-js .pl-rv {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
