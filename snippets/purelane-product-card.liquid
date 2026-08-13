@@ -14,19 +14,22 @@
     assign badge_text = s.new_tag_label
   endif
 
-  assign is_sold_out = true
+  assign is_sold_out = false
   unless p.available
     assign is_sold_out = true
-  else
-    assign is_sold_out = false
   endunless
 
   assign on_sale = false
   assign percent_off = 0
-  if p.compare_at_price > p.price and p.compare_at_price != blank
+  if p.compare_at_price != blank and p.compare_at_price > p.price
     assign on_sale = true
     assign price_saved = p.compare_at_price | minus: p.price
-    assign percent_off = price_saved | times: 100 | divided_by: p.compare_at_price | round
+    assign percent_off = price_saved | times: 100.0 | divided_by: p.compare_at_price | round
+  endif
+
+  assign has_variants = false
+  if p.variants.size > 1
+    assign has_variants = true
   endif
 
   assign rating = s.default_rating
@@ -70,18 +73,19 @@
     {%- endif -%}
   </div>
 
-  <product-form class="pl-atc">
-    {%- form 'product', p, id: 'purelane-form-' | append: p.id, class: 'pl-atc__form', data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
-      <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
-      <input type="hidden" name="quantity" value="1">
-      <button
-        type="submit"
-        name="add"
-        class="pl-btn pl-btn--ghost pl-btn--sm pl-atc__btn"
-        {% if is_sold_out %}disabled{% endif %}
-      >
-        {%- if is_sold_out -%}{{ s.sold_out_label }}{%- else -%}{{ s.add_to_cart_label }}{%- endif -%}
-      </button>
-    {%- endform -%}
-  </product-form>
+  <div class="pl-atc">
+    {%- if is_sold_out -%}
+      <button type="button" class="pl-btn pl-btn--ghost pl-btn--sm pl-atc__btn" disabled>{{ s.sold_out_label }}</button>
+    {%- elsif has_variants -%}
+      <a class="pl-btn pl-btn--ghost pl-btn--sm pl-atc__btn" href="{{ p.url }}">{{ s.choose_options_label | default: 'Choose options' }}</a>
+    {%- else -%}
+      <product-form>
+        {%- form 'product', p, id: 'purelane-form-' | append: p.id, class: 'pl-atc__form', data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" name="add" class="pl-btn pl-btn--ghost pl-btn--sm pl-atc__btn">{{ s.add_to_cart_label }}</button>
+        {%- endform -%}
+      </product-form>
+    {%- endif -%}
+  </div>
 </article>
