@@ -237,4 +237,4 @@ mindmap
 1. **Seed the store** — `data/seed-products.csv` + metaobjects + badge metafield (steps in [`data/README.md`](data/README.md)) so the shop/combos grids render real cards before review
 2. **Theme-editor stress test (Part 4b)** — add/remove/reorder sections in the editor and watch console + animations (checklist in `plan.md`)
 3. **Final Lighthouse pass (4d)** — identical command in `notes/performance-baseline.md` against the live storefront
-4. Fill in the storefront password in `notes/submission-email.md` at send time and email `nj@troopod.io`
+4. Send the submission to `nj@troopod.io` — subject `AI Product Engineer Assignment - Sargaprasad R S` — with the storefront password in the email body only (never committed to the repo)

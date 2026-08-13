@@ -28,6 +28,8 @@ scripts/px-check/target/
 # Dev-only credentials — never commit store passwords
 *.env
 .env.local
+# Local-only submission email (contains the storefront password — send then delete)
+notes/mail.txt
 
 # python
 __pycache__/
