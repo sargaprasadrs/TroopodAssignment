@@ -4,6 +4,8 @@ Date: 2026-08-13 · Target: V2 light palette · Reference file: `purelane-homepa
 
 **Status:** harness + prototype baseline **done**; **live-build verification done** against the deployed theme on `purelane-dev-rzcwvlkv` (Purelane Dawn #160976306422, published 2026-08-13). Remaining: theme-editor stress test (4b — needs a human in the editor) and the final Lighthouse run on the live storefront.
 
+**Post-hardening re-run (2026-08-13):** full QA re-run against the **updated build** via `shopify theme dev` on `localhost:9292` (see the hardening log in `notes/build-notes.md`). Results: axe still reports **1 violation total** — the stock Dawn cart link (not ours); contrast matrix **passes** (5 residual FAIL rows are large-text or decorative-icon contexts that pass AA-large); captures re-recorded at 4 widths to `target/`; live-check clean (0 animations under reduced motion, focus rings present, all 5 sections render). One schema gotcha surfaced and fixed during this pass: Shopify rejects `default: ""` on text block settings (`Invalid block 'slide': setting with id="price" default can't be blank`) — the hero price/compare settings now omit `default` entirely instead.
+
 ---
 
 ## 4a — Pixel verification
@@ -23,10 +25,12 @@ Date: 2026-08-13 · Target: V2 light palette · Reference file: `purelane-homepa
 
 | Width | Page height (px) | Sections found |
 |---|---|---|
-| 375 | 2,490 | all 5 ✓ |
-| 768 | 2,214 | all 5 ✓ |
-| 1024 | 2,206 | all 5 ✓ |
-| 1440 | 2,249 | all 5 ✓ |
+| 375 | 2,478 | all 5 ✓ |
+| 768 | 2,208 | all 5 ✓ |
+| 1024 | 2,200 | all 5 ✓ |
+| 1440 | 2,243 | all 5 ✓ |
+
+> **Harness fix:** `capture.js` now writes to `target/` when `PX_URL` is set (previously it always wrote to `prototype/`, clobbering the baseline on build runs). Baseline and build are now separate folders.
 
 > Live page is ~2.2–2.5k px vs the prototype's ~7.5–11.5k px: the homepage template renders **only the five scoped sections** (bonus sections were cut), so heights differ by design. Hero selector note: the build's hero is `section.pl-hero` (prototype used `section.hero`) — the harness now matches both.
 

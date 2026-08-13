@@ -32,15 +32,28 @@ Deliverable for the Troopod assignment. Covers: what's wrong with the original f
 - Animations rebuilt per the spec: reveal unobserve, autoplay pauses on hover/focus/off-screen, everything gated by `prefers-reduced-motion`; scene crossfade replaced by a static tint (see `specs/00-tokens.md`).
 - Long-title clamp, art-fallback-for-no-image, and sold-out states handled in the shared product card.
 
-**Current state (honest):** Part 3 has landed `sections/` + `snippets/` (13 files). **Still pending:** `assets/purelane.css` + `purelane.js` (referenced by `purelane-assets.liquid` but not yet in the repo), homepage `templates/index.json`, layout wiring, and dev-store validation (4b/4d in `notes/qa-report.md`). The repo's committed history covers Parts 1, 2, 4 and 5; the Part 3 commit follows when the build finishes.
+**Current state (honest):** Parts 1–5 landed (5 sections + 8 snippets + `assets/purelane.css`/`purelane.js` + `templates/index.json`), deployed and verified live on `purelane-dev-rzcwvlkv`. A post-review hardening pass then applied:
+
+- Hero slide price/compare-at **defaults are now empty** so the "empty = product price" fallback actually works (previously the pre-filled ₹200/₹299 always won).
+- Reviews marquee `pause_on_hover` setting is now wired to the CSS pause (was a no-op).
+- `review` metaobject rating is `number_integer` — no more 4.5 → 5-star rounding.
+- Multi-variant products show a **"Choose options"** CTA to the product page instead of silently adding the default variant.
+- **A11y fixes applied:** `#reviews` gained an sr-only `h2` (fixes the h1→h5 jump), hero dots have 24×24 hit areas (WCAG 2.2), and the failing contrast pairs were re-tuned — `paper-3` alpha 0.56 → 0.68 (3.73:1 → 5.4:1), new `accent-deep #8f5410` (≈5.5:1) for small accent text, `green-deep #3f640c` for pill text, stars darkened to `#6e8c1a` (≥3:1 icons). Verified with `scripts/px-check/contrast.py`.
+- Reveal-on-scroll is gated on our own `pl-js` class instead of Dawn's `html.js` — if `purelane.js` ever fails to load, content stays visible rather than stuck hidden.
+- `% off` rows now round instead of truncate (41.6% → 42%), and zero-item combos/bundles hide their count rows.
+- QA scripts no longer embed store credentials or machine-specific paths: passwords come from `PX_PASSWORD` (env), and the default prototype URL is resolved relative to the repo.
+
+**Known Dawn issue (not in this repo):** the stock Dawn header cart link has no accessible name (axe `link-name` violation). One-line fix in Dawn's `snippets/header.liquid` (`aria-label="Cart"` on the cart anchor) — the repo only ships custom files, so patch Dawn at deploy time if you want it gone.
 
 ## 3. What I'd do with more time
 
-- Finish and QA the asset layer + homepage template, then run the theme-editor stress test (4b) and the Lighthouse re-check (4d) on the dev store — the harness is ready (`scripts/px-check/`, `notes/performance-baseline.md`).
+- Run the **theme-editor stress test (4b)** — the one QA item that needs a human in the editor (`plan.md` Part 4b has the checklist; the editor link is in `notes/qa-report.md`).
+- Run the **final Lighthouse pass (4d)** on the live storefront and record the stock-Dawn → final delta (`notes/performance-baseline.md` has the identical command).
 - Integrate a real reviews app so aggregates come from the platform instead of section settings.
-- Wire the three queued a11y fixes from Part 4 into the build (darken `paper-3`/`accent` for small text, enlarge nav-dot hit areas, add a `#reviews` heading).
 - Editor presets polish + `locales`/`config` for a fully stock-Dawn-conformant theme.
+- Seed the store (products + metaobjects from `data/README.md`) so the shop/combos grids render with real cards — right now they correctly render empty until then.
 
 ## 4. Cut log
 
-Nothing cut yet — all five sections are built per the plan's cut strategy (reviews/bundles were the fallback cuts; not needed).
+- **Purelane cart drawer (`sections/purelane-cart-drawer.liquid`)** — an experiment to replace stock Dawn's header cart with a branded drawer. Cut: it needs Dawn header/layout surgery (files this repo deliberately doesn't ship), stock Dawn already ships a working cart drawer, and it was out of the five-section scope. Any brand styling can ride on top of Dawn's native drawer later.
+- Nothing else cut — all five sections are built per the plan's cut strategy (reviews/bundles were the fallback cuts; not needed).

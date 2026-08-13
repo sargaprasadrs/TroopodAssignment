@@ -29,8 +29,8 @@ flowchart LR
 | **1 · Recon & Spec** | Design audit, fix-list, five pixel-accurate section specs | ✅ Committed |
 | **2 · Setup & Data** | Locked decisions, seed data, metaobject definitions | ✅ Committed — seeding steps ready (`data/README.md`) |
 | **3 · Build** | Five sections + shared snippets + assets + homepage template | ✅ Committed, pushed to dev store, **live** |
-| **4 · QA & Hardening** | Pixel harness, axe, contrast, perf reference | ✅ Live build verified (all 5 sections @ 4 widths, axe, focus, reduced motion) — 4b stress test + final Lighthouse pending |
-| **5 · Delivery** | Build/AI-workflow notes, submission draft | ✅ Committed + pushed — email ready, URL/password filled in |
+| **4 · QA & Hardening** | Pixel harness, axe, contrast, perf reference | ✅ Post-review hardening pass applied + re-verified (a11y fixes, contrast re-tune, whole-number ratings, variant CTAs, reveal gating) — 4b stress test + final Lighthouse still need a human/credentials |
+| **5 · Delivery** | Build/AI-workflow notes, submission draft | ✅ Committed + pushed — email ready (URL filled in; password filled in at send time, never committed) |
 
 ---
 
@@ -234,8 +234,7 @@ mindmap
 
 ## 🚀 Next steps
 
-1. **Verify the live render** — confirm all five sections render on `purelane-dev-rzcwvlkv` (needs the storefront password for the password page / `theme dev`)
-2. **Seed the store** — `data/seed-products.csv` + metaobjects + badge metafield (steps in [`data/README.md`](data/README.md))
-3. Finish `notes/submission-email.md` with the dev-store URL + password and send to `nj@troopod.io`
-4. Re-run the live QA: theme-editor stress test (plan.md Part 4b) + Lighthouse on the deployed theme
-5. Apply the three queued a11y fixes from `notes/qa-report.md` (micro-label contrast, nav-dot target size, `#reviews` heading)
+1. **Seed the store** — `data/seed-products.csv` + metaobjects + badge metafield (steps in [`data/README.md`](data/README.md)) so the shop/combos grids render real cards before review
+2. **Theme-editor stress test (Part 4b)** — add/remove/reorder sections in the editor and watch console + animations (checklist in `plan.md`)
+3. **Final Lighthouse pass (4d)** — identical command in `notes/performance-baseline.md` against the live storefront
+4. Fill in the storefront password in `notes/submission-email.md` at send time and email `nj@troopod.io`

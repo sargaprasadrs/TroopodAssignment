@@ -1,6 +1,6 @@
 # Performance baseline — stock Dawn
 
-**Status:** pending dev store + `shopify theme dev`.
+**Status:** prototype reference **recorded** (Part 4, `scripts/px-check/out/lh-prototype.json`); stock-Dawn baseline + final-build re-run **pending** a password-free local preview of the dev store (`shopify theme dev`).
 
 ## Command (identical for baseline and Part 4 re-check)
 
@@ -17,7 +17,18 @@ Run against the **stock Dawn** homepage at `localhost:9292` before any section w
 - INP < 200ms
 - TBT recorded (no hard target; report only)
 
-## Baseline (to fill once the store runs)
+## Prototype reference (Part 4 measurement, mobile profile — full JSON in `scripts/px-check/out/lh-prototype.json`)
+
+| Metric | Prototype | Target |
+|---|---|---|
+| Performance score | 74 | ≥ 90 |
+| **LCP** | **4.3 s** | < 2.5 s |
+| CLS | 0 | < 0.1 |
+| TBT | 0 ms | — |
+
+LCP 4.3 s on a 328 KiB single file (inline SVG/base64 art, two style blocks, fixed animated scene layer) is the strongest argument for the Part 1 rebuild decisions.
+
+## Baseline table (to fill once the store runs)
 
 | Metric | Baseline (stock Dawn) | Final (Part 4) | Delta |
 |---|---|---|---|
