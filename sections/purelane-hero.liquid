@@ -75,24 +75,36 @@
               assign slide_prod = block.settings.product | default: nil
               assign slide_price = block.settings.price | default: blank
               assign slide_compare = block.settings.compare_at_price | default: blank
+              assign price_from_settings = false
+              assign compare_from_settings = false
               if slide_price == blank and slide_prod != blank
                 assign slide_price = slide_prod.price
+              else
+                assign price_from_settings = true
               endif
               if slide_compare == blank and slide_prod != blank
                 assign slide_compare = slide_prod.compare_at_price
+              else
+                assign compare_from_settings = true
               endif
               assign price_num = blank
               assign compare_num = blank
               if slide_price != blank
                 assign price_num = slide_price | plus: 0
+                if price_from_settings
+                  assign price_num = price_num | times: 100
+                endif
               endif
               if slide_compare != blank
                 assign compare_num = slide_compare | plus: 0
+                if compare_from_settings
+                  assign compare_num = compare_num | times: 100
+                endif
               endif
               assign offer_final = slide_offer
               if offer_final == blank and compare_num != blank and price_num != blank and compare_num > price_num
                 assign saved_num = compare_num | minus: price_num
-                assign pct_num = saved_num | times: 100 | divided_by: compare_num | round
+                assign pct_num = saved_num | times: 100.0 | divided_by: compare_num | round
                 assign offer_final = pct_num | append: '% off'
               endif
               assign art_eager = 'lazy'
@@ -117,6 +129,7 @@
                         width="{{ slide_img.width }}"
                         height="{{ slide_img.height }}"
                         loading="{{ art_eager }}"
+                        {% if art_eager == 'eager' %}fetchpriority="high"{% endif %}
                         decoding="async"
                       >
                     {%- else -%}
@@ -145,7 +158,7 @@
       </div>
 
       {%- if section.blocks.size > 1 -%}
-        <div class="pl-hdots" aria-label="Hero slides">
+        <div class="pl-hdots" role="group" aria-label="Hero slides">
           {%- for block in section.blocks -%}
             {%- if block.type == 'slide' -%}
               <button
@@ -182,8 +195,7 @@
   <div class="pl-sr-only" aria-live="polite" aria-atomic="true">
     {%- for block in section.blocks -%}
       {%- if block.type == 'slide' and forloop.first -%}
-        {{ block.settings.label }}
-        {%- if block.settings.price != blank %} — {{ block.settings.price }}{% endif -%}
+        {{ block.settings.label | default: 'Hero slide' }}
       {%- endif -%}
     {%- endfor -%}
   </div>
@@ -254,8 +266,8 @@
         { "type": "text", "id": "offer_line", "label": "Offer line (empty = computed % off)", "default": "33% off" },
         { "type": "image_picker", "id": "image", "label": "Slide image" },
         { "type": "product", "id": "product", "label": "Product (image + price fallback)" },
-        { "type": "text", "id": "price", "label": "Price (empty = product price)", "default": "200" },
-        { "type": "text", "id": "compare_at_price", "label": "Compare-at price (empty = product)", "default": "299" }
+        { "type": "text", "id": "price", "label": "Price (empty = product price)" },
+        { "type": "text", "id": "compare_at_price", "label": "Compare-at price (empty = product)" }
       ]
     }
   ],

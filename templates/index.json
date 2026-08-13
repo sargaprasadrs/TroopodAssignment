@@ -1,7 +1,42 @@
 {
   "sections": {
     "purelane_hero": {
-      "type": "purelane-hero"
+      "type": "purelane-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "label": "Single bottle",
+            "offer_line": "33% off",
+            "price": "200",
+            "compare_at_price": "299"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "label": "Any 2 products",
+            "offer_line": "Save ₹249",
+            "price": "349",
+            "compare_at_price": "598"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "label": "Any 3 products",
+            "offer_line": "Save ₹398",
+            "price": "499",
+            "compare_at_price": "897"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {}
     },
     "purelane_shop": {
       "type": "purelane-shop"
