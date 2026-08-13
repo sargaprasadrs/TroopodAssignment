@@ -4,7 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const URL = process.env.PX_URL || 'file:///C:/Users/LOQ/Desktop/TroopodAssignment/purelane-homepage.html';
+// Default: the design source in this repo (repo-relative, so the harness runs
+// on any machine). Point PX_URL at the dev store / theme dev preview for the build.
+const URL = process.env.PX_URL || 'file:///' + path.join(__dirname, '..', '..', 'purelane-homepage.html').replace(/\\/g, '/');
 
 (async () => {
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-first-run'] });

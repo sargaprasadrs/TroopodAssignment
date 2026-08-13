@@ -64,3 +64,25 @@ node live-check.js            # requires theme dev running at localhost:9292
 
 - Verifies all five sections render, checks focus rings on tab stops, emulates `prefers-reduced-motion` and counts active animations, and collects console errors + failed requests.
 - Output: `out/live-check.json` + `out/live-homepage.png` (full-page screenshot).
+
+## 6. Live hero check (password-gated storefronts)
+
+```bash
+PX_PASSWORD=<storefront password> node live-hero.js
+# optional: PX_STORE=https://your-store.myshopify.com
+```
+
+- Loads the published storefront (handles the password page), verifies the hero renders with its slides/dots/images, checks the `fetchpriority`/`loading` attributes on hero art, and captures full-page + hero-crop screenshots as evidence.
+- Credentials come from env only — `PX_PASSWORD` is required and never committed.
+- Output: `out/live-hero.json` + `out/live-hero-full.png` + `out/live-hero-section.png`.
+
+## 7. Unpublished-theme preview check
+
+```bash
+PX_PASSWORD=<storefront password> node preview-check.js
+# optional: PX_STORE=https://your-store.myshopify.com
+```
+
+- Opens the storefront's password page, then loads a specific preview theme URL (`?preview_theme_id=…`) and reports whether the hero slides/dots render on it — handy for eyeballing an unpublished theme before pushing.
+
+> All scripts default the prototype URL to the repo-relative `purelane-homepage.html` when `PX_URL` isn't set, so the harness runs on any machine without editing paths.
