@@ -36,7 +36,10 @@
         "slide_2",
         "slide_3"
       ],
-      "settings": {}
+      "settings": {
+        "primary_cta_link": "#shop",
+        "secondary_cta_link": "#bundles"
+      }
     },
     "purelane_shop": {
       "type": "purelane-shop"
