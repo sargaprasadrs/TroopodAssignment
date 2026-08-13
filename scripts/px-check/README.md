@@ -86,3 +86,13 @@ PX_PASSWORD=<storefront password> node preview-check.js
 - Opens the storefront's password page, then loads a specific preview theme URL (`?preview_theme_id=…`) and reports whether the hero slides/dots render on it — handy for eyeballing an unpublished theme before pushing.
 
 > All scripts default the prototype URL to the repo-relative `purelane-homepage.html` when `PX_URL` isn't set, so the harness runs on any machine without editing paths.
+
+## 8. Demo video (`IP protection`)
+
+```bash
+node record-demo.js        # requires preview/purelane-preview.html (see scripts/watermark.js)
+```
+
+- Records a ~15 s walkthrough of the **watermarked** read-only preview into `delivery/purelane-demo.webm` (WebM/VP8, ~12 fps).
+- Uses CDP screencast frames (fast on the heavy SVG page) + `ffmpeg-static` (bundled, no system install).
+- Env knobs: `DEMO_URL`, `DEMO_WIDTH`/`DEMO_HEIGHT`, `DEMO_DURATION`, `DEMO_OUT`, `DEMO_HIDE` (defaults to hiding the `.bub` bubble layer while recording — barely visible, much smoother).

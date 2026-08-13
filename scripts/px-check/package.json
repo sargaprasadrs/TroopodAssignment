@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "axe-core": "^4.13.0",
+    "ffmpeg-static": "^5.2.0",
     "puppeteer-core": "^25.6.0"
   }
 }

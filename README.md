@@ -197,6 +197,24 @@ Details for every command: [`scripts/px-check/README.md`](scripts/px-check/READM
 | Pixel spec of every section | [`specs/`](specs/) |
 | QA evidence | [`notes/qa-report.md`](notes/qa-report.md) + `scripts/px-check/out/` |
 | What we'd flag / do differently | [`notes/build-notes.md`](notes/build-notes.md), [`notes/ai-workflow-notes.md`](notes/ai-workflow-notes.md) |
+| IP protection & sharing | [`delivery/README.md`](delivery/README.md) — how every shared artifact is protected |
+
+---
+
+## 🔒 IP protection & sharing
+
+Before anything leaves this repo, it goes through **`scripts/package-delivery.sh`**, which bakes all five protections into the shareable `delivery/` folder — so every deliverable (and every commit that ships one) carries them:
+
+1. **Watermarks** — `scripts/watermark.js` stamps a semi-transparent diagonal mark + corner badge on the design preview and on every screenshot.
+2. **Demo video, not source** — `scripts/px-check/record-demo.js` records a short video of the project working (`delivery/purelane-demo.webm`), recorded **from the watermarked preview** so the mark is in the video.
+3. **Read-only links** — `delivery/purelane-preview.html` is a hardened single-file preview (copy / print / drag / right-click / save blocked in-browser); host it and share the URL. Guide + honest limitations in [`delivery/README.md`](delivery/README.md).
+4. **Blurred key details** — the package contains screenshots and documents only; the theme source (`sections/`, `snippets/`, `assets/`, `data/`) and exact figures are never included. Use `--blur` on `watermark.js` to redact prices/ratings in the preview if desired.
+5. **High-level summary** — `scripts/make-pdf.js` renders [`notes/ip-summary.md`](notes/ip-summary.md) into `delivery/Purelane_Strategy_Summary.pdf`: strategy and steps, no code, no master file.
+
+```bash
+./scripts/package-delivery.sh      # assemble delivery/ (builds anything missing)
+FORCE=1 ./scripts/package-delivery.sh   # rebuild preview + video + pdf from scratch
+```
 
 ---
 
