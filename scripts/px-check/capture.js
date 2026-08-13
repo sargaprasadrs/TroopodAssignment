@@ -3,12 +3,14 @@ const fs = require('fs');
 const path = require('path');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const URL = process.env.PX_URL || 'file:///C:/Users/LOQ/Desktop/TroopodAssignment/purelane-homepage.html';
+// Default: the design source in this repo (repo-relative, so the harness runs
+// on any machine). Point PX_URL at the dev store / theme dev preview for the build.
+const URL = process.env.PX_URL || 'file:///' + path.join(__dirname, '..', '..', 'purelane-homepage.html').replace(/\\/g, '/');
 const WIDTHS = [375, 768, 1024, 1440];
 // Selectors match both the design prototype (section.hero) and the
 // Dawn build (section.pl-hero). Other sections keep their ids in both.
 const SECTIONS = [['hero','section.hero, section.pl-hero'],['shop','#shop'],['combos','#combos'],['bundles','#bundles'],['reviews','#reviews']];
-const OUT = path.join(__dirname, 'prototype');
+const OUT = path.join(__dirname, process.env.PX_URL ? 'target' : 'prototype');
 const report = {};
 
 (async () => {

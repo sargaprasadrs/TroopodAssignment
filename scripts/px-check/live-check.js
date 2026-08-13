@@ -41,35 +41,18 @@ fs.mkdirSync(OUT, { recursive: true });
     return out;
   });
 
-  // 2. Focus pass — first 12 tab stops
-  const focusStops = await page.evaluate(async () => {
-    const stops = [];
-    for (let i = 0; i < 12; i++) {
-      document.activeElement && document.activeElement.blur();
-      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-      // puppeteer's keyboard is required; emulate via focus order instead:
-      const els = [...document.querySelectorAll('a[href],button,input,select,textarea,[tabindex]:not([tabindex="-1"])')];
-      const active = document.activeElement;
-      stops.push({ tag: active ? active.tagName : null, cls: active ? active.className.toString().slice(0, 40) : null, txt: active ? (active.innerText || active.getAttribute('aria-label') || '').trim().slice(0, 30) : null });
-      break; // keyboard events don't move focus; we'll report the first element instead
-    }
-    return stops;
-  });
-
-  // 3. Real keyboard Tab via CDP
-  await page.keyboard.press('Tab');
-  const firstFocus = await page.evaluate(() => {
-    const a = document.activeElement;
-    const cs = getComputedStyle(a);
-    return { tag: a.tagName, txt: (a.innerText || a.getAttribute('aria-label') || '').trim().slice(0, 40), outline: cs.outlineStyle + ' ' + cs.outlineWidth, hasRing: cs.outlineStyle !== 'none' || parseFloat(cs.boxShadow.split(' ')[2] || 0) > 2 };
-  });
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
-  const thirdFocus = await page.evaluate(() => {
-    const a = document.activeElement;
-    const cs = getComputedStyle(a);
-    return { tag: a.tagName, txt: (a.innerText || a.getAttribute('aria-label') || '').trim().slice(0, 40), outline: cs.outlineStyle + ' ' + cs.outlineWidth, hasRing: cs.outlineStyle !== 'none' || parseFloat(cs.boxShadow.split(' ')[2] || 0) > 2 };
-  });
+  // 2. Focus pass — 12 real Tab stops via CDP keyboard events
+  const focusStops = [];
+  for (let i = 0; i < 12; i++) {
+    await page.keyboard.press('Tab');
+    focusStops.push(await page.evaluate(() => {
+      const a = document.activeElement;
+      const cs = getComputedStyle(a);
+      return { tag: a.tagName, txt: (a.innerText || a.getAttribute('aria-label') || '').trim().slice(0, 40), outline: cs.outlineStyle + ' ' + cs.outlineWidth, hasRing: cs.outlineStyle !== 'none' || parseFloat((cs.boxShadow || '').split(' ')[2] || 0) > 2 };
+    }));
+  }
+  const firstFocus = focusStops[0];
+  const thirdFocus = focusStops[2];
 
   // 4. Reduced motion
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);

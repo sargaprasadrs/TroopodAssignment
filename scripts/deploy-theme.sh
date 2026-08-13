@@ -45,15 +45,17 @@ echo "==> 1/3 Assembling stock Dawn + Purelane custom files"
 
 echo "==> 2/3 Pushing to '$THEME_NAME' on $STORE"
 cd "$BUILD_DIR/dawn-base"
-shopify theme push --unpublished --theme "$THEME_NAME" --store "$STORE"
-
-echo "==> 3/3 Publishing as live theme"
-THEME_ID="$(shopify theme list --store "$STORE" --json | node -e "
+# --json returns the freshly created theme's id, so repeat deploys always
+# publish the NEW theme (name-based lookup would match the old live theme).
+PUSH_OUT="$(shopify theme push --unpublished --theme "$THEME_NAME" --store "$STORE" --json)"
+THEME_ID="$(printf '%s' "$PUSH_OUT" | node -e "
   let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>{
-    const t=JSON.parse(d).find(t=>t.name===process.argv[1]&&t.role!=='development');
-    if(!t){console.error('theme not found');process.exit(1)}
-    console.log(t.id)
-  })" "$THEME_NAME")"
+    const j=JSON.parse(d);
+    if(!j.theme||!j.theme.id){console.error('push failed');process.exit(1)}
+    console.log(j.theme.id)
+  })")"
+
+echo "==> 3/3 Publishing theme $THEME_ID as live"
 shopify theme publish -t "$THEME_ID" --store "$STORE" -f
 
 echo
