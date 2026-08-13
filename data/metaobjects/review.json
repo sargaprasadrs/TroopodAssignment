@@ -24,9 +24,9 @@
     {
       "name": "Rating",
       "key": "rating",
-      "type": "number_decimal",
+      "type": "number_integer",
       "required": true,
-      "description": "Star rating rendered as filled stars (1-5).",
+      "description": "Star rating rendered as filled stars (whole number 1-5, e.g. 5 or 4).",
       "validations": [
         { "name": "min", "value": "1" },
         { "name": "max", "value": "5" }

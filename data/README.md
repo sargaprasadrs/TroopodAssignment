@@ -31,3 +31,11 @@ Definitions can be created programmatically via the Admin GraphQL API (`metaobje
 ## 4. Badge metafield — `metafields/product-badge.json`
 
 Admin → Settings → Custom data → Metafields → Products → Add definition with namespace `custom`, key `badge` (JSON in `data/metafields/`). Optional — tag badges work without it.
+
+## 5. Shop-card ratings (optional)
+
+Shop cards read per-product ratings from the **native Shopify reviews metafields** — `reviews.rating` (number) and `reviews.rating_count` (number), the exact namespace/keys the Shopify Product Reviews app writes to. No definition to create: install any reviews app (or set those two product metafields manually) and the cards pick them up. Empty = the shop section's default rating/review count.
+
+## 6. Review ratings are whole numbers
+
+The `review` metaobject `rating` field is `number_integer` (1–5) so star rendering is always exact — a decimal like 4.5 can't be entered and can't render as a wrong star count.
