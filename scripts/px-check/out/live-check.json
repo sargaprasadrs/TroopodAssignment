@@ -13,8 +13,8 @@
     "http://cdn.shopify.com/shopifycloud/storefront/assets/storefront/origin_trials-5059b83f.js",
     "http://localhost:9292/web-pixels@f0278712w4dc1d85epb91e7f02mc957d251/custom/web-pixel-shopify-custom-pixel@0510/sandbox/modern/",
     "http://localhost:9292/api/collect",
-    "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&analytics_trace_id=ea244822-1673-4492-8732-b5ee00922baf&compact_layout=true&flow=embed&flow_version=account_menu&locale=en&preact=true&redirect_uri=http%3A%2F%2Flocalhost%3A9292&response_mode=web_message&response_type=id_token&scope=openid+email%3Averified+pay%3Asession_token+profile+shop%3Aaccount_uuid&storefront_domain=https%3A%2F%2Fpurelane-dev-rzcwvlkv.myshopify.com&target_origin=http%3A%2F%2Flocalhost%3A9292&ux_mode=windoid&ux_role=prompt",
-    "https://shop.app/pay/hop?analytics_trace_id=3ce293c9-b1ad-4ba2-b48b-c6a4583b5c9a&target_origin=http%3A%2F%2Flocalhost%3A9292&client_handle=purelane-dev-rzcwvlkv.myshopify.com"
+    "https://shop.app/pay/hop?analytics_trace_id=4aba0e8c-2e0e-4c20-8213-b0e24e4d556a&target_origin=http%3A%2F%2Flocalhost%3A9292&client_handle=purelane-dev-rzcwvlkv.myshopify.com",
+    "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&analytics_trace_id=7470691b-0a33-419b-b1c8-33bbb29ffb1b&compact_layout=true&flow=embed&flow_version=account_menu&locale=en&preact=true&redirect_uri=http%3A%2F%2Flocalhost%3A9292&response_mode=web_message&response_type=id_token&scope=openid+email%3Averified+pay%3Asession_token+profile+shop%3Aaccount_uuid&storefront_domain=https%3A%2F%2Fpurelane-dev-rzcwvlkv.myshopify.com&target_origin=http%3A%2F%2Flocalhost%3A9292&ux_mode=windoid&ux_role=prompt"
   ],
   "sections": {
     "hero": {
@@ -34,7 +34,7 @@
       "h": 422
     },
     "reviews": {
-      "h": 170
+      "h": 164
     },
     "bodyText": "purelane-dev CLEAN THAT LASTS Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it. SHOP NOW HOW IT WORKS PLANT POWERED KIDS & PET SAFE ZERO HARSH CHEM PLANT POWERED From plants, not chemicals SAFE FOR KIDS & PETS Gentle around the whole family ZERO HARSH CHEMICALS Kind to skin, surfaces and soil BESTSELLERS LOVED BY 30,000 HOMES "
   },
@@ -55,5 +55,5 @@
     "revealHidden": 0,
     "revealCount": 1
   },
-  "pageHeight": 2249
+  "pageHeight": 2243
 }

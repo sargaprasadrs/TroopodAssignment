@@ -1,76 +1,494 @@
 [
   {
-    "id": "link-name",
+    "id": "color-contrast",
     "impact": "serious",
     "tags": [
-      "cat.name-role-value",
-      "wcag2a",
-      "wcag244",
-      "wcag412",
-      "section508",
-      "section508.22.a",
+      "cat.color",
+      "wcag2aa",
+      "wcag143",
       "TTv5",
-      "TT6.a",
+      "TT13.c",
       "EN-301-549",
-      "EN-9.2.4.4",
-      "EN-9.4.1.2",
+      "EN-9.1.4.3",
       "ACT",
       "RGAAv4",
-      "RGAA-6.2.1"
+      "RGAA-3.2.1"
     ],
-    "description": "Ensure links have discernible text",
-    "help": "Links must have discernible text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/link-name?application=axeAPI",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=axeAPI",
     "nodes": [
       {
         "any": [
           {
-            "id": "has-visible-text",
-            "data": null,
-            "relatedNodes": [],
-            "impact": "serious",
-            "message": "Element does not have text that is visible to screen readers"
-          },
-          {
-            "id": "aria-label",
-            "data": null,
-            "relatedNodes": [],
-            "impact": "serious",
-            "message": "aria-label attribute does not exist or is empty"
-          },
-          {
-            "id": "aria-labelledby",
-            "data": null,
-            "relatedNodes": [],
-            "impact": "serious",
-            "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
-          },
-          {
-            "id": "non-empty-title",
+            "id": "color-contrast",
             "data": {
-              "messageKey": "noAttr"
+              "fgColor": "#807891",
+              "bgColor": "#f4f0fb",
+              "contrastRatio": 3.73,
+              "fontSize": "7.5pt (10px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
             },
-            "relatedNodes": [],
+            "relatedNodes": [
+              {
+                "html": "<body>",
+                "target": [
+                  "body"
+                ]
+              }
+            ],
             "impact": "serious",
-            "message": "Element has no title attribute"
+            "message": "Element has insufficient color contrast of 3.73 (foreground color: #807891, background color: #f4f0fb, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
           }
         ],
         "all": [],
-        "none": [
+        "none": [],
+        "impact": "serious",
+        "html": "<div class=\"swipecue\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h13m-5-6 6 6-6 6\"></path></svg>Swipe for more combos</div>",
+        "target": [
+          ".swipecue"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.73 (foreground color: #807891, background color: #f4f0fb, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
           {
-            "id": "focusable-no-name",
-            "data": null,
-            "relatedNodes": [],
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#807891",
+              "bgColor": "#f4f0fb",
+              "contrastRatio": 3.73,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<body>",
+                "target": [
+                  "body"
+                ]
+              }
+            ],
             "impact": "serious",
-            "message": "Element is in tab order and does not have accessible text"
+            "message": "Element has insufficient color contrast of 3.73 (foreground color: #807891, background color: #f4f0fb, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
           }
         ],
+        "all": [],
+        "none": [],
         "impact": "serious",
-        "html": "<a href=\"/cart\">",
+        "html": "<p class=\"railnote\">Tapping \"Shop bundle\" opens the bundle picker with these products already added. You can still swap anything before you pay.</p>",
         "target": [
-          "a[href$=\"cart\"]"
+          ".railnote"
         ],
-        "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.73 (foreground color: #807891, background color: #f4f0fb, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ]
+  },
+  {
+    "id": "target-size",
+    "impact": "serious",
+    "tags": [
+      "cat.sensory-and-visual-cues",
+      "wcag22aa",
+      "wcag258"
+    ],
+    "description": "Ensure touch targets have sufficient size and space",
+    "help": "All touch targets must be 24px large, or leave sufficient space",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/target-size?application=axeAPI",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 8,
+              "height": 8
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (8px by 8px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"#how\" aria-label=\"How it works\"></a>",
+                "target": [
+                  "a[aria-label=\"How it works\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"#ingredients\" aria-label=\"Ingredients\"></a>",
+        "target": [
+          "a[aria-label=\"Ingredients\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (8px by 8px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 8,
+              "height": 8
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (8px by 8px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"#ingredients\" aria-label=\"Ingredients\"></a>",
+                "target": [
+                  "a[aria-label=\"Ingredients\"]"
+                ]
+              },
+              {
+                "html": "<a href=\"#proof\" aria-label=\"Proof\"></a>",
+                "target": [
+                  "a[aria-label=\"Proof\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"#how\" aria-label=\"How it works\"></a>",
+        "target": [
+          "a[aria-label=\"How it works\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (8px by 8px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 8,
+              "height": 8
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (8px by 8px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"#how\" aria-label=\"How it works\"></a>",
+                "target": [
+                  "a[aria-label=\"How it works\"]"
+                ]
+              },
+              {
+                "html": "<a href=\"#bundles\" aria-label=\"Bundles\"></a>",
+                "target": [
+                  "a[aria-label=\"Bundles\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"#proof\" aria-label=\"Proof\"></a>",
+        "target": [
+          "a[aria-label=\"Proof\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (8px by 8px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 8,
+              "height": 8
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (8px by 8px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"#proof\" aria-label=\"Proof\"></a>",
+                "target": [
+                  "a[aria-label=\"Proof\"]"
+                ]
+              },
+              {
+                "html": "<a href=\"#shop\" aria-label=\"Shop\"></a>",
+                "target": [
+                  "a[aria-label=\"Shop\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"#bundles\" aria-label=\"Bundles\"></a>",
+        "target": [
+          "a[aria-label=\"Bundles\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (8px by 8px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 8,
+              "height": 8
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (8px by 8px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"#bundles\" aria-label=\"Bundles\"></a>",
+                "target": [
+                  "a[aria-label=\"Bundles\"]"
+                ]
+              },
+              {
+                "html": "<a href=\"#voices\" aria-label=\"Reviews\"></a>",
+                "target": [
+                  "a[aria-label=\"Reviews\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"#shop\" aria-label=\"Shop\"></a>",
+        "target": [
+          "a[aria-label=\"Shop\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (8px by 8px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 8,
+              "height": 8
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (8px by 8px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"#shop\" aria-label=\"Shop\"></a>",
+                "target": [
+                  "a[aria-label=\"Shop\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"#voices\" aria-label=\"Reviews\"></a>",
+        "target": [
+          "a[aria-label=\"Reviews\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (8px by 8px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 20,
+              "height": 6
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (20px by 6px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 16,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<button type=\"button\" class=\"\" aria-label=\"Show 2 products\"></button>",
+                "target": [
+                  "button[aria-label=\"Show 2 products\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button type=\"button\" class=\"on\" aria-label=\"Show 1 product\"></button>",
+        "target": [
+          "button[aria-label=\"Show 1 product\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (20px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 6,
+              "height": 6
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (6px by 6px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 2,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<button type=\"button\" class=\"on\" aria-label=\"Show 1 product\"></button>",
+                "target": [
+                  "button[aria-label=\"Show 1 product\"]"
+                ]
+              },
+              {
+                "html": "<button type=\"button\" class=\"\" aria-label=\"Show 3 products\"></button>",
+                "target": [
+                  "button[aria-label=\"Show 3 products\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 2px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button type=\"button\" class=\"\" aria-label=\"Show 2 products\"></button>",
+        "target": [
+          "button[aria-label=\"Show 2 products\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (6px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 2px instead of at least 24px."
+      },
+      {
+        "any": [
+          {
+            "id": "target-size",
+            "data": {
+              "minSize": 24,
+              "width": 6,
+              "height": 6
+            },
+            "relatedNodes": [],
+            "impact": "serious",
+            "message": "Target has insufficient size (6px by 6px, should be at least 24px by 24px)"
+          },
+          {
+            "id": "target-offset",
+            "data": {
+              "closestOffset": 2,
+              "minOffset": 24
+            },
+            "relatedNodes": [
+              {
+                "html": "<button type=\"button\" class=\"\" aria-label=\"Show 2 products\"></button>",
+                "target": [
+                  "button[aria-label=\"Show 2 products\"]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 2px instead of at least 24px."
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button type=\"button\" class=\"\" aria-label=\"Show 3 products\"></button>",
+        "target": [
+          "button[aria-label=\"Show 3 products\"]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Target has insufficient size (6px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 2px instead of at least 24px."
       }
     ]
   }
