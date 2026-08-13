@@ -1,0 +1,100 @@
+{
+  "home": {
+    "title": "purelane-dev",
+    "sections": {
+      "hero": true,
+      "shop": true,
+      "combos": true,
+      "bundles": true,
+      "reviews": true
+    },
+    "heroSlides": 3,
+    "heroLabels": [
+      "Single bottle",
+      "Any 2 products",
+      "Any 3 products"
+    ],
+    "productCards": 0,
+    "cardTitles": [],
+    "bodyLen": 1026
+  },
+  "pages": {
+    "product": {
+      "status": 404,
+      "title": "404 Not Found – purelane-dev",
+      "bodyLen": 91
+    },
+    "collection": {
+      "status": 200,
+      "title": "Products – purelane-dev",
+      "bodyLen": 61
+    },
+    "cart": {
+      "status": 200,
+      "title": "Your Shopping Cart – purelane-dev",
+      "bodyLen": 57
+    },
+    "search": {
+      "status": 200,
+      "title": "Search: 0 results found for \"clean\" – purelane-dev",
+      "bodyLen": 96
+    },
+    "page": {
+      "status": 404,
+      "title": "404 Not Found – purelane-dev",
+      "bodyLen": 91
+    }
+  },
+  "assetStatus": {
+    "purelane.css": 200,
+    "purelane.js": 200
+  },
+  "badStatus": [
+    {
+      "status": 404,
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/products/purelane-all-purpose-cleaner"
+    },
+    {
+      "status": 404,
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/pages/about"
+    }
+  ],
+  "failedReqs": [
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/api/collect",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&anal",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/api/collect",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&anal",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/api/collect",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&anal",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/api/collect",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://purelane-dev-rzcwvlkv.myshopify.com/services/login_with_shop/authorize?analytics_context=loginWithShopEmbed&anal",
+      "err": "net::ERR_ABORTED"
+    }
+  ],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()"
+  ]
+}
