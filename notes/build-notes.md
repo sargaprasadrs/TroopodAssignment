@@ -42,6 +42,8 @@ Deliverable for the Troopod assignment. Covers: what's wrong with the original f
 - Reveal-on-scroll is gated on our own `pl-js` class instead of Dawn's `html.js` — if `purelane.js` ever fails to load, content stays visible rather than stuck hidden.
 - `% off` rows now round instead of truncate (41.6% → 42%), and zero-item combos/bundles hide their count rows.
 - QA scripts no longer embed store credentials or machine-specific paths: passwords come from `PX_PASSWORD` (env), and the default prototype URL is resolved relative to the repo.
+- **Hero CTA buttons now default to real anchors** (`#shop` / `#bundles`) — they previously rendered `href=""` dead buttons when the section was added fresh. The `url` setting type wouldn't accept an anchor default, so the two CTA links are now `text` like the combo/bundle fallback links.
+- **Prototype fonts loaded:** Outfit (display) + Inter (body) from Google Fonts with preconnect + `display=swap`, exactly as the design file does — the build previously fell back to Dawn's default font, so the distinctive display type was missing.
 
 **Known Dawn issue (not in this repo):** the stock Dawn header cart link has no accessible name (axe `link-name` violation). One-line fix in Dawn's `snippets/header.liquid` (`aria-label="Cart"` on the cart anchor) — the repo only ships custom files, so patch Dawn at deploy time if you want it gone.
 
